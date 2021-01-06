@@ -1,7 +1,7 @@
 package javarumdennnicht;
 
 
-import de.diafreak.java1test.Profile;
+import javarumdennnicht.Profile;
 
 public class FollowerList
 {
