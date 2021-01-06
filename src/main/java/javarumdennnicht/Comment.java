@@ -1,4 +1,4 @@
-package main;
+package javarumdennnicht;
 
 public class Comment
 {
