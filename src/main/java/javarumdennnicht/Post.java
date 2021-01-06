@@ -7,7 +7,7 @@ public class Post
     // private picture; --> Bilder sind kein Datentyp? Void ist bei Variablen illegal :(
     private String description;
     private String meetingPlace;
-    private String meetingDate; // Datentyp date gibts nicht direkt
+    private LocalDate meetingDate;
     private int likes = 0;
     private Comment[] comments;
 
@@ -24,14 +24,7 @@ public class Post
 
     public void addLike(Profile liker)
     {
-        // Schauen ob liker im likedBy Array ist
-        // falls nicht:
-        // Profil zu likedBy dazupacken und
-        likes += 1;
-        // falls doch:
-        // Profil von likedBy wegnehmen? und
-        likes -= 1;
-
+        // ArrayLists nochmal anschauen
     }
 
 
