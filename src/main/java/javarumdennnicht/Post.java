@@ -4,7 +4,7 @@ public class Post
 {
     private Profile[] taggedProfiles;
     private Profile[] likedByProfiles;
-    // private picture; --> Bilder sind kein Datentyp? Void ist bei Variablen illegal :-(
+    // private picture; --> Bilder sind kein Datentyp? Void ist bei Variablen illegal :(
     private String description;
     private String meetingPlace;
     private String meetingDate; // Datentyp date gibts nicht direkt

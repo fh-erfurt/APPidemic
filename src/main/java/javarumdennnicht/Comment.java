@@ -6,7 +6,7 @@ public class Comment
     private String text;
     private Profile commenter;
 
-    // leerer constructor hehe
+    // leerer constructor
     public Comment()
     {
     }
