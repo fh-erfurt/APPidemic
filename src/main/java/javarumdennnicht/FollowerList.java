@@ -1,8 +1,6 @@
 package javarumdennnicht;
 
 
-import javarumdennnicht.Profile;
-
 public class FollowerList
 {
     //Constructor
