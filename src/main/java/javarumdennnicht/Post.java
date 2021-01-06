@@ -1,5 +1,9 @@
 package javarumdennnicht;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+
 public class Post
 {
     private Profile[] taggedProfiles;
@@ -60,12 +64,12 @@ public class Post
         this.meetingPlace = meetingPlace;
     }
 
-    public String getMeetingDate()
+    public LocalDate getMeetingDate()
     {
         return meetingDate;
     }
 
-    public void setMeetingDate(String meetingDate)
+    public void setMeetingDate(LocalDate meetingDate)
     {
         this.meetingDate = meetingDate;
     }
