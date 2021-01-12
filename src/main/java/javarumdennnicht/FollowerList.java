@@ -3,12 +3,16 @@ package javarumdennnicht;
 
 public class FollowerList
 {
-    //Constructor
-    public FollowerList() {}
-
-
     private int followerNumber;
     private Profile[] profiles;
+
+
+    //Constructor
+    public FollowerList(int followerNumber)
+    {
+        this.followerNumber = followerNumber;
+        this.profiles       = null;             //???nötig???
+    }
 
 
     //Getter & Setter
@@ -27,9 +31,9 @@ public class FollowerList
         return profiles;
     }
 
-    public void setProfiles(Profile[] profiles)
+    public void setProfiles(Profile profile)
     {
-        //get last index then insert there
-        this.profiles = profiles;
+        //was machen wenn Lücke?
+        this.profiles[this.followerNumber] = profile;
     }
 }

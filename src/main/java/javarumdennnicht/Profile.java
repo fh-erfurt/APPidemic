@@ -6,31 +6,42 @@ import java.time.format.DateTimeFormatter;
 
 public class Profile
 {
-    private String          username;
-    private String          firstName;
-    private String          lastName;
-    private String          biography;
-    private LocalDate       birthdate;
-    private User            relatedUser;
-    private Post[]          relatedPosts;
-    private FollowerList[]  followers;
-    private FollowingList[] following;
-    private boolean         privacySetting;
+    private String        username;
+    private String        firstName;
+    private String        lastName;
+    private String        biography;
+    private LocalDate     birthdate;
+    private User          relatedUser;
+    private Post[]        relatedPosts;
+    private FollowerList  followers;        //???wie FollowerNumber? Interface? Muss auf Methode von FollowerList.getFollowerNumber() zugreifen???
+    private FollowingList following;
+    private boolean       privacySetting;   //???rename to "Show personal information"???
+
 
     //Constructor
-    public Profile()
+    public Profile(String username, String firstName, String lastName, LocalDate birthdate, User relatedUser)
     {
-
+        this.username       = username;
+        this.firstName      = firstName;   //???warum hier nochmal? reicht das nicht in User???
+        this.lastName       = lastName;
+        this.birthdate      = birthdate;
+        this.relatedUser    = relatedUser;
+        this.biography      = "";
+        this.relatedPosts   = null;       //???nötig???           //empty array: new array[] {}
+        this.followers      = new FollowerList(0);   //???Array nötig???    ???new nötig???    ???ist das die richtige Syntax???
+        this.following      = new FollowingList(0); //???setter und getter eigentlich sinnlos???
+        this.privacySetting = false;
     }
 
 
     public String getFormattedBirthdate()
     {
+        //LocalDate is in format yyyy-mm-dd, this function formats it into dd-mm-yyyy format
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return birthdate.format(dateFormat);
     }
 
-    public void follow(){}
+    public void follow(){}      //???wie unfollow/wo - auf eigenem Profil oder auf Profil des anderen? weil Zahl vom ungefollowtem Account muss auch -1???
 
     public void newPost(){}
 
@@ -105,6 +116,26 @@ public class Profile
     public void setRelatedPosts(Post[] relatedPosts)
     {
         this.relatedPosts = relatedPosts;
+    }
+
+
+    public FollowerList getFollowers()
+    {
+        return followers;
+    }
+    public void setFollowers(FollowerList followers)
+    {
+        this.followers = followers;
+    }
+
+
+    public FollowingList getFollowing()
+    {
+        return following;
+    }
+    public void setFollowing(FollowingList following)
+    {
+        this.following = following;
     }
 
 

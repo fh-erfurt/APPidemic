@@ -3,12 +3,16 @@ package javarumdennnicht;
 
 public class FollowingList
 {
-    //Constructor
-    public FollowingList() {}
-
-
     private int followingNumber;
     private Profile[] profiles;
+
+
+    //Constructor
+    public FollowingList(int followingNumber)
+    {
+        this.followingNumber = followingNumber;
+        this.profiles        = null;             //???nötig???
+    }
 
 
     //Getter & Setter
@@ -27,9 +31,10 @@ public class FollowingList
         return profiles;
     }
 
-    public void setProfiles(Profile[] profiles)
+    public void setProfiles(Profile profile)
     {
-        //get last index then insert there
-        this.profiles = profiles;
+        //was machen wenn Lücke? ArrayList mit Funktion das zu schieben? oder einfachen Array?
+        this.profiles[this.followingNumber] = profile;
+        //mit schleife schauen ob die Stelle frei ist und sonst so lange +1 bis freie Stelle gefunden ist? (zur Sicherheit)
     }
 }
