@@ -13,7 +13,7 @@ public class Profile
     private LocalDate     birthdate;
     private User          relatedUser;
     private Post[]        relatedPosts;
-    private FollowerList  followers;        //???wie FollowerNumber? Interface? Muss auf Methode von FollowerList.getFollowerNumber() zugreifen???
+    private FollowerList  followers;
     private FollowingList following;
     private boolean       privacySetting;   //???rename to "Show personal information"???
 
