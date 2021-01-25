@@ -1,36 +1,29 @@
 package javarumdennnicht;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 
 public class Profile
 {
-    private String        username;
-    private String        firstName;
-    private String        lastName;
-    private String        biography;
-    private LocalDate     birthdate;
-    private User          relatedUser;
-    private Post[]        relatedPosts;
-    private FollowerList  followers;
-    private FollowingList following;
-    private boolean       privacySetting;   //???rename to "Show personal information"???
+    enum PrivacySetting { PUBLIC, PRIVATE }
+
+    private String         biography;
+    private User           relatedUser;
+    private Post[]         relatedPosts;
+    private FollowerList   followerList;
+    private FollowingList  followingList;
+    private PrivacySetting privacySetting;
 
 
     //Constructor
-    public Profile(String username, String firstName, String lastName, LocalDate birthdate, User relatedUser)
+    public Profile(User relatedUser)
     {
-        this.username       = username;
-        this.firstName      = firstName;   //???warum hier nochmal? reicht das nicht in User???
-        this.lastName       = lastName;
-        this.birthdate      = birthdate;
         this.relatedUser    = relatedUser;
         this.biography      = "";
-        this.relatedPosts   = null;       //???nötig???           //empty array: new array[] {}
-        this.followers      = new FollowerList(0);   //???Array nötig???    ???new nötig???    ???ist das die richtige Syntax???
-        this.following      = new FollowingList(0); //???setter und getter eigentlich sinnlos???
-        this.privacySetting = false;
+        this.relatedPosts   = null;
+        this.followerList   = new FollowerList();
+        this.followingList  = new FollowingList();
+        this.privacySetting = PrivacySetting.PRIVATE;
     }
 
 
@@ -38,47 +31,26 @@ public class Profile
     {
         //LocalDate is in format yyyy-mm-dd, this function formats it into dd-mm-yyyy format
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return birthdate.format(dateFormat);
+        return relatedUser.getBirthdate().format(dateFormat);
     }
 
-    public void follow(){}      //???wie unfollow/wo - auf eigenem Profil oder auf Profil des anderen? weil Zahl vom ungefollowtem Account muss auch -1???
+    public void follow(Profile followedUser)    // !!! no double follow !!!
+    {
+        followedUser.setFollower(this.relatedUser.getRelatedProfile());        //add your current profile to the FollowingList of the profile you want to follow
+        this.relatedUser.getRelatedProfile().setFollowingList(followedUser);   //add the profile you're following to your own FollowingList
+    }
+
+    public void unfollow() {} //ArrayList al=new ArrayList(); | al.removeAll(Arrays.asList(null,""));
 
     public void newPost(){}
 
     public void createAlarm(){}
 
+    //function changePrivacySettings
+
+                        //??? function displayPersonalInformation ???
 
     //Getter & Setter
-    public String getUsername()
-    {
-        return username;
-    }
-    public void setUsername(String username)
-    {
-        this.username = username;
-    }
-
-
-    public String getFirstName()
-    {
-        return firstName;
-    }
-    public void setFirstName(String firstName)
-    {
-        this.firstName = firstName;
-    }
-
-
-    public String getLastName()
-    {
-        return lastName;
-    }
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
-    }
-
-
     public String getBiography()
     {
         return biography;
@@ -86,16 +58,6 @@ public class Profile
     public void setBiography(String biography)
     {
         this.biography = biography;
-    }
-
-
-    public LocalDate getBirthdate()
-    {
-        return birthdate;
-    }
-    public void setBirthdate(LocalDate birthdate)
-    {
-        this.birthdate = birthdate;
     }
 
 
@@ -119,31 +81,33 @@ public class Profile
     }
 
 
-    public FollowerList getFollowers()
+    public FollowerList getFollowerList()
     {
-        return followers;
-    }
-    public void setFollowers(FollowerList followers)
-    {
-        this.followers = followers;
+        return followerList;
     }
 
-
-    public FollowingList getFollowing()
+    public void setFollower(Profile follower)
     {
-        return following;
-    }
-    public void setFollowing(FollowingList following)
-    {
-        this.following = following;
+        this.followerList.addProfile(follower);
     }
 
 
-    public boolean isPrivacySetting()
+    public FollowingList getFollowingList()
+    {
+        return followingList;
+    }
+
+    public void setFollowingList(Profile following)
+    {
+        this.followingList.addProfile(following);
+    }
+
+
+    public PrivacySetting getPrivacySetting()
     {
         return privacySetting;
     }
-    public void setPrivacySetting(boolean privacySetting)
+    public void setPrivacySetting(PrivacySetting privacySetting)
     {
         this.privacySetting = privacySetting;
     }
