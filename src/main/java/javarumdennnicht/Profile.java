@@ -9,7 +9,7 @@ public class Profile
 
     private String         biography;
     private User           relatedUser;
-    private Post[]         relatedPosts;
+    private Post[]         relatedPosts;    //!!! array list or constant !!!
     private FollowerList   followerList;
     private FollowingList  followingList;
     private PrivacySetting privacySetting;
@@ -34,10 +34,10 @@ public class Profile
         return relatedUser.getBirthdate().format(dateFormat);
     }
 
-    public void follow(Profile followedUser)    // !!! no double follow !!!
+    public void follow(Profile followedProfile)    // !!! no double follow !!!
     {
-        followedUser.setFollower(this.relatedUser.getRelatedProfile());        //add your current profile to the FollowingList of the profile you want to follow
-        this.relatedUser.getRelatedProfile().setFollowingList(followedUser);   //add the profile you're following to your own FollowingList
+        followedProfile.setFollower(this.relatedUser.getRelatedProfile());        //add your current profile to the FollowingList of the profile you want to follow
+        this.relatedUser.getRelatedProfile().setFollowingList(followedProfile);   //add the profile you're following to your own FollowingList
     }
 
     public void unfollow() {} //ArrayList al=new ArrayList(); | al.removeAll(Arrays.asList(null,""));
@@ -97,9 +97,9 @@ public class Profile
         return followingList;
     }
 
-    public void setFollowingList(Profile following)
+    public void setFollowingList(Profile followedProfile)
     {
-        this.followingList.addProfile(following);
+        this.followingList.addProfile(followedProfile);
     }
 
 
