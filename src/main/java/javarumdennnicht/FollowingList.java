@@ -1,17 +1,20 @@
 package javarumdennnicht;
 
+// import ArrayList class
+import java.util.ArrayList;
+
 
 public class FollowingList
 {
     private int followingNumber;
-    private Profile[] profiles;
+    private ArrayList<Profile> profiles;
 
 
     //Constructor
-    public FollowingList(int followingNumber)
+    public FollowingList()
     {
-        this.followingNumber = followingNumber;
-        this.profiles        = null;             //???nötig???
+        this.followingNumber = 0;
+        this.profiles        = new ArrayList<>();
     }
 
 
@@ -26,15 +29,14 @@ public class FollowingList
     }
 
 
-    public Profile[] getProfiles()
+    public ArrayList<Profile> getProfiles()
     {
         return profiles;
     }
 
-    public void setProfiles(Profile profile)
+    public void addProfile(Profile profile)
     {
-        //was machen wenn Lücke? ArrayList mit Funktion das zu schieben? oder einfachen Array?
-        this.profiles[this.followingNumber] = profile;
-        //mit schleife schauen ob die Stelle frei ist und sonst so lange +1 bis freie Stelle gefunden ist? (zur Sicherheit)
+        this.profiles.add(profile);
+        this.followingNumber++;
     }
 }

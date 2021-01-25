@@ -1,17 +1,20 @@
 package javarumdennnicht;
 
+// import ArrayList class
+import java.util.ArrayList;
+
 
 public class FollowerList
 {
     private int followerNumber;
-    private Profile[] profiles;
+    private ArrayList<Profile> profiles;
 
 
     //Constructor
-    public FollowerList(int followerNumber)
+    public FollowerList()
     {
-        this.followerNumber = followerNumber;
-        this.profiles       = null;             //???nötig???
+        this.followerNumber = 0;
+        this.profiles       = new ArrayList<>();
     }
 
 
@@ -26,14 +29,14 @@ public class FollowerList
     }
 
 
-    public Profile[] getProfiles()
+    public ArrayList<Profile> getProfiles()
     {
         return profiles;
     }
 
-    public void setProfiles(Profile profile)
+    public void addProfile(Profile profile)
     {
-        //was machen wenn Lücke?
-        this.profiles[this.followerNumber] = profile;
+        this.profiles.add(profile);
+        this.followerNumber++;
     }
 }
