@@ -1,6 +1,7 @@
 package javarumdennnicht;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -48,14 +49,32 @@ public class testProfile
 
 
     @Test
-    public void f()
+    public void following_a_profile_should_add_your_profile_to_their_follower_list_and_their_profile_to_your_following_list()
     {
         // Given
+        User user1 = new User();                                                  //??? change when constructor ???
+        user1.setFirstName("Hans");
+        user1.setLastName("Müller");
+        user1.setUsername("hansmueller");
+        User user2 = new User();                                                  //??? change when constructor ???
+        user2.setFirstName("Hans");
+        user2.setLastName("Müller");
+        user2.setUsername("hansmueller");
+
+        Profile profile1 = new Profile(user1);
+        Profile profile2 = new Profile(user2);
+        user1.setRelatedProfile(profile1);
+        user2.setRelatedProfile(profile2);
 
         // When
+        profile1.follow(profile2);
+
+        ArrayList<Profile> followersProfile2 = profile2.getFollowerList().getProfiles();
+        ArrayList<Profile> followingProfile1 = profile1.getFollowingList().getProfiles();
 
         // Then
-        assertEquals("message", "expected", "actual");
+        assertEquals("When you follow a profile your profile should be in their FollowerList.",  profile1, followersProfile2.get(0));
+        assertEquals("When you follow a profile their profile should be in your FollowingList.", profile2, followingProfile1.get(0));
     }
 
 }
