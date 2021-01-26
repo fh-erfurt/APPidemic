@@ -105,4 +105,45 @@ public class testProfile
         // Then
         assertEquals("You shouldn't be able to follow a profile twice.", 1, profile2.getFollowerList().getNumberOfProfiles());
     }
+
+
+
+    @Test
+    public void unfollow_a_profile_should_remove_your_profile_from_their_follower_list_and_their_profile_from_your_following_list()
+    {
+        // Given
+        User user1 = new User();                                                  //??? change when constructor ???
+        user1.setFirstName("Hans");
+        user1.setLastName("Müller");
+        user1.setUsername("hansmueller");
+        User user2 = new User();                                                  //??? change when constructor ???
+        user2.setFirstName("Tom");
+        user2.setLastName("Vogt");
+        user2.setUsername("tomvogt");
+        User user3 = new User();                                                  //??? change when constructor ???
+        user3.setFirstName("Dieter");
+        user3.setLastName("Kalt");
+        user3.setUsername("kalterdieter");
+
+        Profile profile1 = new Profile(user1);
+        Profile profile2 = new Profile(user2);
+        Profile profile3 = new Profile(user3);
+
+        user1.setRelatedProfile(profile1);
+        user2.setRelatedProfile(profile2);
+        user3.setRelatedProfile(profile3);
+
+        profile1.follow(profile3);
+        profile2.follow(profile3);
+
+        // When
+        profile1.unfollow(profile3);
+
+        // Then
+        assertEquals("When you unfollow a profile your profile should be removed from their FollowerList.", profile2, profile3.getFollowerList().getProfile(0));
+        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.", 1, profile3.getFollowerList().getNumberOfProfiles());
+
+        assertNull("When you unfollow a profile their profile should be removed from your FollowingList.", profile1.getFollowingList().getProfile(0));
+        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.", 0, profile1.getFollowerList().getNumberOfProfiles());
+    }
 }
