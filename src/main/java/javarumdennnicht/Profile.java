@@ -9,15 +9,18 @@ public class Profile
 {
     enum PrivacySetting { PUBLIC, PRIVATE }
 
-    private String         biography;
-    private User           relatedUser;
-    private Post[]         relatedPosts;    //!!! array list or constant !!!
-    private ProfileList    followerList;
-    private ProfileList    followingList;
-    private PrivacySetting privacySetting;
+    private       String         biography;
+    private       User           relatedUser;
+    private       Post[]         relatedPosts;    //!!! array list or constant !!!
+    private final ProfileList    followerList;
+    private final ProfileList    followingList;
+    private       PrivacySetting privacySetting;
 
 
-    //Constructor
+
+    // ======================= //
+    // ===== Constructor ===== //
+    // ======================= //
     public Profile(User relatedUser)
     {
         this.relatedUser    = relatedUser;
@@ -29,30 +32,44 @@ public class Profile
     }
 
 
-    //LocalDate is in format yyyy-mm-dd, this function formats it into dd-mm-yyyy format
+
+    // =============================== //
+    // ===== Functions / Methods ===== //
+    // =============================== //
+
+    //LocalDate is in format yyyy-mm-dd
+    //this function formats it into dd-mm-yyyy format
     public String getFormattedBirthdate()
     {
-        //Define the pattern for the date
+        //define the pattern for the date
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return relatedUser.getBirthdate().format(dateFormat);
     }
 
 
-    public void follow(Profile followedProfile) //profile1(profile2)
+    public void follow(Profile followedProfile)
     {
         if (profileIsNotAlreadyInFollowingList(followedProfile))
         {
-            addOwnProfileToFollowedListOfFollowedProfile(followedProfile);     //add your current profile to the FollowingList of the profile you want to follow
-            addFollowedProfileToOwnFollowingList(followedProfile);             //add the profile you're following to your own FollowingList
+            //add your current profile to the FollowerList of the profile you want to follow
+            addOwnProfileToFollowerListOfFollowedProfile(followedProfile);
+            //add the profile you are following to your own FollowingList
+            addFollowedProfileToOwnFollowingList(followedProfile);
         }
         else
         {
-            System.out.println("You're already following this profile!");
+            System.out.println("You're already following this profile!");                               //??? Something else ???
         }
     }
 
 
-    public void unfollow() {}
+    public void unfollow(Profile unfollowedProfile)                                                     //!!! add check if you're not following the given profile !!!
+    {
+        //remove your current profile from the FollowerList of the profile you are unfollowing
+        removeOwnProfileFromFollowedListOfUnfollowedProfile(unfollowedProfile);
+        //remove the profile you are unfollowing from your own FollowingList
+        removeUnfollowedProfileFromOwnFollowingList(unfollowedProfile);
+    }
 
     public void newPost(){}
 
@@ -62,9 +79,12 @@ public class Profile
 
                         //??? function displayPersonalInformation ???
 
+
+
     // =========================== //
     // ===== Getter & Setter ===== //
     // =========================== //
+
     public String getBiography()
     {
         return biography;
@@ -79,7 +99,7 @@ public class Profile
     {
         return relatedUser;
     }
-    private void setRelatedUser(User relatedUser)       //??? private or public ???
+    private void setRelatedUser(User relatedUser)                                                   //??? private or public ???
     {
         this.relatedUser = relatedUser;
     }
@@ -125,21 +145,37 @@ public class Profile
     }
 
 
-    // ============================== //
-    // ===== Refactored methods ===== //
-    // ============================== //
+
+    // ============================= //
+    // ===== Extracted Methods ===== //
+    // ============================= //
+
     private boolean profileIsNotAlreadyInFollowingList(Profile followedProfile)
     {
         return !this.followingList.isProfileAlreadyInList(followedProfile);
     }
 
-    private void addOwnProfileToFollowedListOfFollowedProfile(Profile followedProfile)
+
+    private void addOwnProfileToFollowerListOfFollowedProfile(Profile followedProfile)
     {
         followedProfile.setFollower(this.relatedUser.getRelatedProfile());
     }
 
+
     private void addFollowedProfileToOwnFollowingList(Profile followedProfile)
     {
         this.relatedUser.getRelatedProfile().setFollowingList(followedProfile);
+    }
+
+
+    private void removeOwnProfileFromFollowedListOfUnfollowedProfile(Profile unfollowedProfile)
+    {
+        unfollowedProfile.getFollowerList().removeProfile(this.getRelatedUser().getRelatedProfile());       // ??? better solution | function currentProfile() ???
+    }
+
+
+    private void removeUnfollowedProfileFromOwnFollowingList(Profile unfollowedProfile)
+    {
+        this.getRelatedUser().getRelatedProfile().getFollowingList().removeProfile(unfollowedProfile);
     }
 }
