@@ -94,4 +94,39 @@ public class testProfileList
         assertEquals("Removing a profile should delete all empty entries.", profile1, followerList.getProfiles().get(0));
         assertEquals("Removing a profile should delete all empty entries.", profile3, followerList.getProfiles().get(1));
     }
+
+
+    @Test
+    public void removing_a_profile_should_decrease_the_profile_number_by_1()
+    {
+        // Given
+        User user1 = new User();                                                  //??? change when constructor ???
+        user1.setFirstName("Hans");
+        user1.setLastName("Müller");
+        user1.setUsername("hansmueller");
+        User user2 = new User();                                                  //??? change when constructor ???
+        user2.setFirstName("Tom");
+        user2.setLastName("Vogt");
+        user2.setUsername("tomvogt");
+        User user3 = new User();                                                  //??? change when constructor ???
+        user3.setFirstName("Dieter");
+        user3.setLastName("Kalt");
+        user3.setUsername("kalterdieter");
+
+        Profile     profile1     = new Profile(user1);
+        Profile     profile2     = new Profile(user2);
+        Profile     profile3     = new Profile(user3);
+        ProfileList followerList = new ProfileList();
+
+        followerList.addProfile(profile1);
+        followerList.addProfile(profile2);
+        followerList.addProfile(profile3);
+
+        // When
+        followerList.removeProfile(profile1);
+        followerList.removeProfile(profile3);
+
+        // Then
+        assertEquals("Removing a profile should decrease the profile-number by 1.", 1, followerList.getNumberOfProfiles());
+    }
 }

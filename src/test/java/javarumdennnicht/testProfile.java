@@ -64,6 +64,7 @@ public class testProfile
 
         Profile profile1 = new Profile(user1);
         Profile profile2 = new Profile(user2);
+
         user1.setRelatedProfile(profile1);
         user2.setRelatedProfile(profile2);
 
@@ -75,4 +76,33 @@ public class testProfile
         assertEquals("When you follow a profile their profile should be in your FollowingList.", profile2, profile1.getFollowingList().getProfiles().get(0));
     }
 
+
+
+    @Test
+    public void you_should_not_be_able_to_follow_a_profile_twice()
+    {
+        // Given
+        User user1 = new User();                                                  //??? change when constructor ???
+        user1.setFirstName("Hans");
+        user1.setLastName("Müller");
+        user1.setUsername("hansmueller");
+        User user2 = new User();                                                  //??? change when constructor ???
+        user2.setFirstName("Tom");
+        user2.setLastName("Vogt");
+        user2.setUsername("tomvogt");
+
+        Profile profile1 = new Profile(user1);
+        Profile profile2 = new Profile(user2);
+
+        user1.setRelatedProfile(profile1);
+        user2.setRelatedProfile(profile2);
+
+        // When
+        profile1.follow(profile2);
+        profile1.follow(profile2);
+        profile1.follow(profile2);
+
+        // Then
+        assertEquals("You shouldn't be able to follow a profile twice.", 1, profile2.getFollowerList().getNumberOfProfiles());
+    }
 }

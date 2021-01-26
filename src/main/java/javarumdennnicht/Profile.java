@@ -29,18 +29,28 @@ public class Profile
     }
 
 
+    //LocalDate is in format yyyy-mm-dd, this function formats it into dd-mm-yyyy format
     public String getFormattedBirthdate()
     {
-        //LocalDate is in format yyyy-mm-dd, this function formats it into dd-mm-yyyy format
+        //Define the pattern for the date
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return relatedUser.getBirthdate().format(dateFormat);
     }
 
-    public void follow(Profile followedProfile)    // !!! no double follow !!!
+
+    public void follow(Profile followedProfile) //profile1(profile2)
     {
-        followedProfile.setFollower(this.relatedUser.getRelatedProfile());        //add your current profile to the FollowingList of the profile you want to follow
-        this.relatedUser.getRelatedProfile().setFollowingList(followedProfile);   //add the profile you're following to your own FollowingList
+        if (profileIsNotAlreadyInFollowingList(followedProfile))
+        {
+            addOwnProfileToFollowedListOfFollowedProfile(followedProfile);     //add your current profile to the FollowingList of the profile you want to follow
+            addFollowedProfileToOwnFollowingList(followedProfile);             //add the profile you're following to your own FollowingList
+        }
+        else
+        {
+            System.out.println("You're already following this profile!");
+        }
     }
+
 
     public void unfollow() {}
 
@@ -52,7 +62,9 @@ public class Profile
 
                         //??? function displayPersonalInformation ???
 
-    //Getter & Setter
+    // =========================== //
+    // ===== Getter & Setter ===== //
+    // =========================== //
     public String getBiography()
     {
         return biography;
@@ -67,7 +79,7 @@ public class Profile
     {
         return relatedUser;
     }
-    public void setRelatedUser(User relatedUser)
+    private void setRelatedUser(User relatedUser)       //??? private or public ???
     {
         this.relatedUser = relatedUser;
     }
@@ -110,5 +122,24 @@ public class Profile
     public void setPrivacySetting(PrivacySetting privacySetting)
     {
         this.privacySetting = privacySetting;
+    }
+
+
+    // ============================== //
+    // ===== Refactored methods ===== //
+    // ============================== //
+    private boolean profileIsNotAlreadyInFollowingList(Profile followedProfile)
+    {
+        return !this.followingList.isProfileAlreadyInList(followedProfile);
+    }
+
+    private void addOwnProfileToFollowedListOfFollowedProfile(Profile followedProfile)
+    {
+        followedProfile.setFollower(this.relatedUser.getRelatedProfile());
+    }
+
+    private void addFollowedProfileToOwnFollowingList(Profile followedProfile)
+    {
+        this.relatedUser.getRelatedProfile().setFollowingList(followedProfile);
     }
 }

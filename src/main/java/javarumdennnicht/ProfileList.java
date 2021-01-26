@@ -1,10 +1,8 @@
 package javarumdennnicht;
 
 
-// import ArrayList class
+//import ArrayList class
 import java.util.ArrayList;
-// import for "Arrays.asList()"
-import java.util.Arrays;
 
 
 
@@ -21,36 +19,63 @@ public class ProfileList
     }
 
 
+    //gets a profile and checks if it is already in the profiles-ArrayList
+    public boolean isProfileAlreadyInList(Profile profile)
+    {
+        for (Profile p: this.profiles)
+        {
+            if (p == profile)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+    //gets a profile and removes it from the profiles-ArrayList
+    //cannot use a for-each loop because the index is required to remove the correct profile
     public void removeProfile(Profile profile)
     {
-        for (int index = 0; index <= profiles.size(); index++)
+        for (int index = 0; index <= this.profiles.size(); index++)
         {
-            if (profile == profiles.get(index))
+            if (profile == this.profiles.get(index))
             {
-                profiles.remove(index);
+                this.profiles.remove(index);
                 break;
             }
         }
 
-        this.numberOfProfiles = profiles.size();
+        setProfileNumber();
     }
 
 
-    //Getter & Setter
+    //sets the current size of the profiles-ArrayList as the numberOfProfiles
+    public void setProfileNumber()
+    {
+        this.numberOfProfiles = this.profiles.size();
+    }
+
+
+    public void addProfile(Profile profile)
+    {
+        this.profiles.add(profile);
+        setProfileNumber();
+    }
+
+
+    // =========================== //
+    // ===== Getter & Setter ===== //
+    // =========================== //
     public int getNumberOfProfiles()
     {
-        return numberOfProfiles;
+        return this.numberOfProfiles;
     }
 
 
     public ArrayList<Profile> getProfiles()
     {
-        return profiles;
-    }
-
-    public void addProfile(Profile profile)
-    {
-        this.profiles.add(profile);
-        this.numberOfProfiles = profiles.size();
+        return this.profiles;
     }
 }
