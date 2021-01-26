@@ -3,39 +3,30 @@ package javarumdennnicht;
 public class Comment
 {
 
-    private String text;
+    private String commenttext;
     private Profile commenter;
 
-    // leerer constructor
-    public Comment()
-    {
-    }
-    // ordentlicher constructor
+    // Constructor
     public Comment(Profile commenter, String text)
     {
         this.commenter = commenter;
-        this.text = text;
+        this.commenttext = text;
     }
-
-
 
     // Setter und Getter
     public String getText()
     {
-        return text;
+        return commenttext;
     }
-
     public void setText(String text)
     {
-        this.text = text;
+        this.commenttext = text;
     }
 
     public Profile getCommenter()
     {
         return commenter;
     }
-
-    // brauchen wir da überhaupt nen setter?
     public void setCommenter(Profile commenter)
     {
         this.commenter = commenter;

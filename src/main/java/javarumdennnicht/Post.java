@@ -1,54 +1,88 @@
 package javarumdennnicht;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 
 public class Post
 {
-    private Profile[] taggedProfiles;
-    private Profile[] likedByProfiles;
-    // private picture; --> Bilder sind kein Datentyp? Void ist bei Variablen illegal :(
+    //vielleicht noch nen private Profile author ?
+    private ArrayList<Profile> taggedProfiles;
+    private ArrayList<Profile> likedByProfiles;
+    private int likes;
+    // private picture; --> Bilder ohne ne oberfläche sind schwer machbar wir sollten den post inhalt also anders "darstellen"
     private String description;
     private String meetingPlace;
     private LocalDate meetingDate;
-    private int likes = 0;
-    private Comment[] comments;
+    private ArrayList<Comment> comments;
 
 
-    // addPicture blabla
 
-    // das ist eins zu eins ne setter methode?
-    /*public void addDescription(String description)
+
+    // Constructor
+    public Post()
     {
-        this.description = description;
+        this.taggedProfiles = new ArrayList<>();
+        this.likedByProfiles = new ArrayList<>();
+        this.likes = likedByProfiles.size();
+        this.description = "";
+        this.meetingPlace = "";
+        this.meetingDate = LocalDate.now();
+        this.comments = new ArrayList<>();
     }
-    */
-    // die anderen auch lol
 
+
+    // Von einem Profil geliket/ entliket werden
     public void addLike(Profile liker)
     {
-        // ArrayLists nochmal anschauen
+        likedByProfiles.add(liker);
+        likes = likedByProfiles.size();
+    }
+    public void removeLike(Profile removedLiker)
+    {
+        likedByProfiles.remove(removedLiker);
+        likes = likedByProfiles.size();
+    }
+
+    // Ein Profil (eines Freundes oä) taggen oder enttaggen
+    public void addTaggedProfile(Profile taggedProfile)
+    {
+        likedByProfiles.add(taggedProfile);
+    }
+    public void removeTaggedProfile(Profile taggedProfile)
+    {
+        likedByProfiles.remove(taggedProfile);
+    }
+
+    // Ein Kommentar schreiben oder entfernen
+    public void addComment(Profile Commenter, String commentedText)
+    {
+        Comment newComment = new Comment(Commenter, commentedText);
+        comments.add(newComment);
+    }
+    public void removeComment(Comment removedComment)
+    {
+        comments.remove(removedComment);
     }
 
 
 
     // Setter und Getter???
-    public Profile[] getTaggedProfiles()
+    public ArrayList<Profile> getTaggedProfiles()
     {
         return taggedProfiles;
     }
-
-    public void setTaggedProfiles(Profile[] taggedProfiles)
+    public void setTaggedProfiles(ArrayList<Profile> newtaggedProfiles)
     {
-        this.taggedProfiles = taggedProfiles;
+        this.taggedProfiles = newtaggedProfiles;
     }
 
     public String getDescription()
     {
         return description;
     }
-
     public void setDescription(String description)
     {
         this.description = description;
@@ -58,7 +92,6 @@ public class Post
     public String getMeetingPlace() {
         return meetingPlace;
     }
-
     public void setMeetingPlace(String meetingPlace)
     {
         this.meetingPlace = meetingPlace;
@@ -68,7 +101,6 @@ public class Post
     {
         return meetingDate;
     }
-
     public void setMeetingDate(LocalDate meetingDate)
     {
         this.meetingDate = meetingDate;
@@ -76,20 +108,16 @@ public class Post
 
     public int getLikes()
     {
-        return likes;
+        return likedByProfiles.size();
     }
+    // kein set likes, da das ja nicht so leicht beinflusst werden kann, ohne die ganze ArrayList zu ändern
 
-    public void setLikes(int likes)
-    {
-        this.likes = likes;
-    }
 
-    public Comment[] getComments()
+    public ArrayList<Comment> getComments()
     {
         return comments;
     }
-
-    public void setComments(Comment[] comments)
+    public void setComments(ArrayList<Comment> comments)
     {
         this.comments = comments;
     }
