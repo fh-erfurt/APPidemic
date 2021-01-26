@@ -29,9 +29,10 @@ public class ProfileList
 
     //gets an index and returns the profile on that index in the profiles-ArrayList
     //if the ArrayList has no elements or the index is higher than the elements in the array the function returns 'null'
+    //it is saver to use than "get()" from the ArrayList, because "get()" cannot handle "out of bounds"-access
     public Profile getProfile(int index)
     {
-        if (listHasNoElements() || indexIsHigherThanListSize(index))
+        if (listHasNoElements() || indexIsHigherThanListSize(index) || indexIsLowerThanZero(index))
         {
             return null;
         }
@@ -68,12 +69,12 @@ public class ProfileList
             }
         }
 
-        setProfileNumber();
+        setNumberOfProfiles();
     }
 
 
     //sets the current size of the profiles-ArrayList as the numberOfProfiles
-    public void setProfileNumber()
+    public void setNumberOfProfiles()
     {
         this.numberOfProfiles = this.profiles.size();
     }
@@ -83,8 +84,9 @@ public class ProfileList
     public void addProfile(Profile profile)
     {
         this.profiles.add(profile);
-        setProfileNumber();
+        setNumberOfProfiles();
     }
+
 
 
     // =========================== //
@@ -115,5 +117,11 @@ public class ProfileList
     private boolean indexIsHigherThanListSize(int index)
     {
         return index > this.profiles.size();
+    }
+
+
+    private boolean indexIsLowerThanZero(int index)
+    {
+        return index < 0;
     }
 }
