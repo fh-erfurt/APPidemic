@@ -1,5 +1,7 @@
 package javarumdennnicht;
 
+
+//import date-formatter
 import java.time.format.DateTimeFormatter;
 
 
@@ -10,8 +12,8 @@ public class Profile
     private String         biography;
     private User           relatedUser;
     private Post[]         relatedPosts;    //!!! array list or constant !!!
-    private FollowerList   followerList;
-    private FollowingList  followingList;
+    private ProfileList    followerList;
+    private ProfileList    followingList;
     private PrivacySetting privacySetting;
 
 
@@ -21,8 +23,8 @@ public class Profile
         this.relatedUser    = relatedUser;
         this.biography      = "";
         this.relatedPosts   = null;
-        this.followerList   = new FollowerList();
-        this.followingList  = new FollowingList();
+        this.followerList   = new ProfileList();
+        this.followingList  = new ProfileList();
         this.privacySetting = PrivacySetting.PRIVATE;
     }
 
@@ -40,7 +42,7 @@ public class Profile
         this.relatedUser.getRelatedProfile().setFollowingList(followedProfile);   //add the profile you're following to your own FollowingList
     }
 
-    public void unfollow() {} //ArrayList al=new ArrayList(); | al.removeAll(Arrays.asList(null,""));
+    public void unfollow() {}
 
     public void newPost(){}
 
@@ -81,22 +83,20 @@ public class Profile
     }
 
 
-    public FollowerList getFollowerList()
+    public ProfileList getFollowerList()
     {
         return followerList;
     }
-
     public void setFollower(Profile follower)
     {
         this.followerList.addProfile(follower);
     }
 
 
-    public FollowingList getFollowingList()
+    public ProfileList getFollowingList()
     {
         return followingList;
     }
-
     public void setFollowingList(Profile followedProfile)
     {
         this.followingList.addProfile(followedProfile);
