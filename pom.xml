@@ -14,7 +14,7 @@
         </dependency>
     </dependencies>
     <packaging>pom</packaging>
-    <description>Example code showing things from the lecture in "real life"</description>
+    <description>An app to make social media more useful in these times of the pandemic.</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
