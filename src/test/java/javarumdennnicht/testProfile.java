@@ -1,10 +1,11 @@
 package javarumdennnicht;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+import java.time.LocalDate;
+
 
 
 public class testProfile
@@ -69,12 +70,9 @@ public class testProfile
         // When
         profile1.follow(profile2);
 
-        ArrayList<Profile> followersProfile2 = profile2.getFollowerList().getProfiles();
-        ArrayList<Profile> followingProfile1 = profile1.getFollowingList().getProfiles();
-
         // Then
-        assertEquals("When you follow a profile your profile should be in their FollowerList.",  profile1, followersProfile2.get(0));
-        assertEquals("When you follow a profile their profile should be in your FollowingList.", profile2, followingProfile1.get(0));
+        assertEquals("When you follow a profile your profile should be in their FollowerList.",  profile1, profile2.getFollowerList().getProfiles().get(0));
+        assertEquals("When you follow a profile their profile should be in your FollowingList.", profile2, profile1.getFollowingList().getProfiles().get(0));
     }
 
 }
