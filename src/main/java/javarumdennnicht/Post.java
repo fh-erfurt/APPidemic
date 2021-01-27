@@ -26,7 +26,7 @@ public class Post
     {
         this.taggedProfiles = new ArrayList<>();
         this.likedByProfiles = new ArrayList<>();
-        this.likes = likedByProfiles.size();
+        this.likes = 0;
         this.imageDescription = imageDescription;
         this.postDescription = postDescription;
         this.meetingPlace = meetingPlace;
@@ -38,7 +38,9 @@ public class Post
     {
        author.addPost(this);
 
-       //for(int i = 0; i <)
+        for (Profile taggedProfile : this.taggedProfiles) {
+            taggedProfile.addTaggedPost(this);
+        }
     }
 
     // Von einem Profil geliket/ entliket werden
