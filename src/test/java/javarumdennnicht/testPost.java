@@ -64,15 +64,15 @@ public class testPost{
         Post post3 = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
         Post post4 = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
 
-        user1.getRelatedProfile().getRelatedPosts().add(post1);
-        user1.getRelatedProfile().getRelatedPosts().add(post2);
-        user1.getRelatedProfile().getRelatedPosts().add(post3);
-        user1.getRelatedProfile().getRelatedPosts().add(post4);
+        user1.getRelatedProfile().getPosts().add(post1);
+        user1.getRelatedProfile().getPosts().add(post2);
+        user1.getRelatedProfile().getPosts().add(post3);
+        user1.getRelatedProfile().getPosts().add(post4);
 
         user1.getRelatedProfile().removePost(post3);
 
-        for(int i = 0; i < user1.getRelatedProfile().getRelatedPosts().size(); i++) {
-            System.out.println(user1.getRelatedProfile().getRelatedPosts().get(i));
+        for(int i = 0; i < user1.getRelatedProfile().getPosts().size(); i++) {
+            System.out.println(user1.getRelatedProfile().getPosts().get(i));
         }
     }
 }
