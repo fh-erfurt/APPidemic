@@ -1,6 +1,5 @@
 package javarumdennnicht;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ public class Post
     private ArrayList<Profile> likedByProfiles;
     private int likes;
     private String imageDescription; // Da wir keine Bilder einfügen können tun wir so als wären das welche
-    private String description;
+    private String postDescription;
     private String meetingPlace;
     private LocalDate meetingDate;
     private ArrayList<Comment> comments;
@@ -28,9 +27,21 @@ public class Post
         this.likedByProfiles = new ArrayList<>();
         this.likes = likedByProfiles.size();
         this.imageDescription = "";
-        this.description = "";
+        this.postDescription = "";
         this.meetingPlace = "";
         this.meetingDate = LocalDate.of(1111,11,11);
+        this.comments = new ArrayList<>();
+    }
+
+    public Post(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
+    {
+        this.taggedProfiles = new ArrayList<>();
+        this.likedByProfiles = new ArrayList<>();
+        this.likes = likedByProfiles.size();
+        this.imageDescription = imageDescription;
+        this.postDescription = postDescription;
+        this.meetingPlace = meetingPlace;
+        this.meetingDate = LocalDate.of(meetingYear,meetingMonth,meetingDay);
         this.comments = new ArrayList<>();
     }
 
@@ -89,13 +100,13 @@ public class Post
         this.imageDescription = imageDescription;
     }
 
-    public String getDescription()
+    public String getPostDescription()
     {
-        return description;
+        return postDescription;
     }
-    public void setDescription(String description)
+    public void setPostDescription(String postDescription)
     {
-        this.description = description;
+        this.postDescription = postDescription;
     }
 
 
