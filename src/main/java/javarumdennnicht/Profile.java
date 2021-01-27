@@ -2,7 +2,6 @@ package javarumdennnicht;
 
 
 //import ArrayList class
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import date-formatter
 import java.time.format.DateTimeFormatter;
@@ -10,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 final class Profile
 {
-    enum PrivacySetting { PUBLIC, PRIVATE }
+    enum PrivacySetting { PUBLIC, PRIVATE }                                     //??? auslagern ???
 
     private       String          biography;
     private final User            relatedUser;
@@ -49,12 +48,13 @@ final class Profile
     {
         //define the pattern for the date
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return relatedUser.getBirthdate().format(dateFormat);
+        return getRelatedUser().getBirthdate().format(dateFormat);
     }
 
 
     public void follow(Profile followedProfile)
     {
+        //only enable to follow a profile if you aren't already following it
         if (profileIsNotAlreadyInFollowingList(followedProfile))
         {
             //add your current profile to the FollowerList of the profile you want to follow
@@ -64,6 +64,7 @@ final class Profile
         }
         else
         {
+            //replacement for "Follow"-button displaying "Unfollow"
             System.out.println("You are already following this profile!");
         }
     }
@@ -85,7 +86,45 @@ final class Profile
     }
 
 
-    public void createAlarm(){}
+    public void createAlarm()
+    {
+
+    }
+
+
+    //this method either displays or hides your posts from a profile that wants to access your posts
+    //if your PrivacySetting is on PUBLIC everyone can see your posts
+    //if your PrivacySetting is on PRIVATE only people that follow you can see your posts
+    public void displayPosts(Profile accessingProfile)
+    {
+        boolean profileIsInFollowingList = false;
+
+        //check if you are following the profile that wants to access your posts
+        for (Profile p: this.getFollowerList().getProfiles())
+        {
+            if (p == accessingProfile)
+            {
+                profileIsInFollowingList = true;
+                break;
+            }
+        }
+
+        if (    privacySettingIsPrivate() && profileIsInFollowingList
+             || privacySettingIsPublic() )
+        {
+            for(Post p: this.getPosts())
+            {
+                //replacement for showing the pictures on the profile
+                System.out.println("Bild: " + p.getImageDescription());
+            }
+        }
+        else
+        {
+            System.out.println("You cannot view the posts of this profile.");
+        }
+    }
+
+
 
     //function changePrivacySettings
 
@@ -99,7 +138,7 @@ final class Profile
 
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
-        Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
+        Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);           //??? andere Lösung für tagged people ???
         post.submitPost(this);
     }
 
@@ -122,12 +161,12 @@ final class Profile
 
     public void addTaggedPost(Post taggedPost)
     {
-        this.taggedPosts.add(taggedPost);                   //??? sicherung ???
+        this.taggedPosts.add(taggedPost);                                                       //??? sicherung ???
     }
 
     public void removeTaggedPost(Post taggedPost)
     {
-        this.taggedPosts.remove(taggedPost);                //??? sicherung ???
+        this.taggedPosts.remove(taggedPost);                                                     //??? sicherung ???
     }
 
 
@@ -148,7 +187,7 @@ final class Profile
 
     public User getRelatedUser()
     {
-        return relatedUser;
+        return this.relatedUser;
     }
 
 
@@ -198,12 +237,11 @@ final class Profile
         return !this.getFollowingList().isProfileAlreadyInList(followedProfile);
     }
 
-
     private boolean profileIsFollowed(Profile unfollowedProfile)
     {
         ArrayList<Profile> ownFollowingList = this.getFollowingList().getProfiles();
 
-        for(Profile p: ownFollowingList)
+        for (Profile p: ownFollowingList)
         {
             if (p == unfollowedProfile)
             {
@@ -215,12 +253,10 @@ final class Profile
     }
 
 
-
     private void addOwnProfileToFollowerListOfFollowedProfile(Profile followedProfile)
     {
         followedProfile.setFollower(this);
     }
-
 
     private void addFollowedProfileToOwnFollowingList(Profile followedProfile)
     {
@@ -230,12 +266,24 @@ final class Profile
 
     private void removeOwnProfileFromFollowedListOfUnfollowedProfile(Profile unfollowedProfile)
     {
-        unfollowedProfile.getFollowerList().removeProfile(this);       // ??? better solution | function currentProfile() ???
+        unfollowedProfile.getFollowerList().removeProfile(this);
     }
-
 
     private void removeUnfollowedProfileFromOwnFollowingList(Profile unfollowedProfile)
     {
         this.getFollowingList().removeProfile(unfollowedProfile);
     }
+
+
+
+    private boolean privacySettingIsPrivate()
+    {
+        return this.getPrivacySetting() == PrivacySetting.PRIVATE;
+    }
+
+    private boolean privacySettingIsPublic()
+    {
+        return this.getPrivacySetting() == PrivacySetting.PUBLIC;
+    }
+
 }
