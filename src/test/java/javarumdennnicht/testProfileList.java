@@ -9,6 +9,36 @@ import static org.junit.Assert.*;
 public class testProfileList
 {
     @Test
+    public void get_profile_should_return_null_if_the_index_is_out_of_bounds_or_the_list_is_empty()
+    {
+        // Given
+        User user1 = new User();                                                  //??? change when constructor ???
+        user1.setFirstName("Hans");
+        user1.setLastName("Müller");
+        user1.setUsername("hansmueller");
+        User user2 = new User();                                                  //??? change when constructor ???
+        user2.setFirstName("Tom");
+        user2.setLastName("Vogt");
+        user2.setUsername("tomvogt");
+
+        Profile     profile1           = new Profile(user1);
+        Profile     profile2           = new Profile(user2);
+        ProfileList filledFollowerList = new ProfileList();
+        ProfileList emptyFollowerList  = new ProfileList();
+
+        // When
+        filledFollowerList.addProfile(profile1);
+        filledFollowerList.addProfile(profile2);
+
+        // Then
+        assertNull("Accessing an index higher than the ArrayList-size should return 'null'.", filledFollowerList.getProfile(5));
+        assertNull("Accessing an empty ArrayList should return 'null'.",                      emptyFollowerList.getProfile(3));
+        assertNull("Accessing an index lower than 0 should return 'null'.",                   filledFollowerList.getProfile(-1));
+    }
+
+
+
+    @Test
     public void follower_number_should_increase_by_1_when_a_profile_follows()
     {
         // Given
@@ -47,8 +77,8 @@ public class testProfileList
         user2.setLastName("Müller");
         user2.setUsername("hansmueller");
 
-        Profile      profile1       = new Profile(user1);
-        Profile      profile2       = new Profile(user2);
+        Profile     profile1      = new Profile(user1);
+        Profile     profile2      = new Profile(user2);
         ProfileList followingList = new ProfileList();
 
         // When
@@ -91,8 +121,8 @@ public class testProfileList
         followerList.removeProfile(profile2);
 
         // Then
-        assertEquals("Removing a profile should delete all empty entries.", profile1, followerList.getProfiles().get(0));
-        assertEquals("Removing a profile should delete all empty entries.", profile3, followerList.getProfiles().get(1));
+        assertEquals("Removing a profile should delete all empty entries.", profile1, followerList.getProfile(0));
+        assertEquals("Removing a profile should delete all empty entries.", profile3, followerList.getProfile(1));
     }
 
 
