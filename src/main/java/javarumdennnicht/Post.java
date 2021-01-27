@@ -12,7 +12,7 @@ public class Post
     private ArrayList<Profile> taggedProfiles;
     private ArrayList<Profile> likedByProfiles;
     private int likes;
-    // private picture; --> Bilder ohne ne oberfläche sind schwer machbar wir sollten den post inhalt also anders "darstellen"
+    private String imageDescription; // Da wir keine Bilder einfügen können tun wir so als wären das welche
     private String description;
     private String meetingPlace;
     private LocalDate meetingDate;
@@ -27,9 +27,10 @@ public class Post
         this.taggedProfiles = new ArrayList<>();
         this.likedByProfiles = new ArrayList<>();
         this.likes = likedByProfiles.size();
+        this.imageDescription = "";
         this.description = "";
         this.meetingPlace = "";
-        this.meetingDate = LocalDate.now();
+        this.meetingDate = LocalDate.of(1111,11,11);
         this.comments = new ArrayList<>();
     }
 
@@ -74,9 +75,18 @@ public class Post
     {
         return taggedProfiles;
     }
-    public void setTaggedProfiles(ArrayList<Profile> newtaggedProfiles)
+    public void setTaggedProfiles(ArrayList<Profile> newTaggedProfiles)
     {
-        this.taggedProfiles = newtaggedProfiles;
+        this.taggedProfiles = newTaggedProfiles;
+    }
+
+    public String getImageDescription()
+    {
+        return imageDescription;
+    }
+    public void setImageDescription(String imageDescription)
+    {
+        this.imageDescription = imageDescription;
     }
 
     public String getDescription()
@@ -97,6 +107,12 @@ public class Post
         this.meetingPlace = meetingPlace;
     }
 
+    public String getFormattedMeetingDate()
+    {
+        //define the pattern for the date
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return getMeetingDate().format(dateFormat);
+    }
     public LocalDate getMeetingDate()
     {
         return meetingDate;
