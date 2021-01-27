@@ -11,16 +11,20 @@ public class User {
     private LocalDate birthdate;
     private Profile relatedProfile;
 
-    public User(String username, String password, String eMail, String firstName, String lasName, LocalDate birthdate, Profile relatedProfile ){
+
+    // Constructor
+
+    public User(String username, String password, String eMail, String firstName, String lastName, LocalDate birthdate){
         this.username = username;
         this.password = password;
         this.eMail = eMail;
         this.firstName = firstName;
-        this.lastName = lasName;
+        this.lastName = lastName;
         this. birthdate = birthdate;
-        this.relatedProfile = relatedProfile;
+        this.relatedProfile = new Profile(this);
     }
 
+    // Setter and Getter
 
     public String getUsername() {
         return username;
@@ -77,6 +81,8 @@ public class User {
     public void setRelatedProfile(Profile relatedProfile) {
         this.relatedProfile = relatedProfile;
     }
+
+    // Other Functions
 
 
 }
