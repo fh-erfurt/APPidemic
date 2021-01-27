@@ -11,9 +11,9 @@ import java.time.LocalDate;
 public class testProfile
 {
     //users used for all the tests, to prevent duplicated code they are declared here so every test can use them
-    User user1 = new User("hansmueller", "12345", "hansmueller@web.de", "Hans", "Müller", LocalDate.of(2000,1,10));
-    User user2 = new User("tomvogt", "98765", "tomvogt@web.de", "Tom", "Vogt", LocalDate.of(1987,3,4));
-    User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt", LocalDate.of(2001,6,13));
+    User user1 = new User("hansmueller",  "12345", "hansmueller@web.de",  "Hans",   "Müller", LocalDate.of(2000,1,10));
+    User user2 = new User("tomvogt",      "98765", "tomvogt@web.de",      "Tom",    "Vogt",   LocalDate.of(1987,3, 4));
+    User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt",   LocalDate.of(2001,6,13));
 
 
     @Test
@@ -69,9 +69,6 @@ public class testProfile
     public void you_should_not_be_able_to_follow_a_profile_twice()
     {
         // Given
-        //User user1 = new User("hansmueller", "12345", "hansmueller@web.de", "Hans", "Müller", LocalDate.of(2000,7,28));
-        //User user2 = new User("tomvogt", "98765", "tomvogt@web.de", "Tom", "Vogt", LocalDate.of(1987,3,4));
-
         Profile profile1 = user1.getRelatedProfile();
         Profile profile2 = user2.getRelatedProfile();
 
