@@ -10,7 +10,7 @@ public class Profile
     enum PrivacySetting { PUBLIC, PRIVATE }
 
     private       String         biography;
-    private       User           relatedUser;
+    private final User           relatedUser;
     private       Post[]         relatedPosts;    //!!! array list or constant !!!
     private final ProfileList    followerList;
     private final ProfileList    followingList;
@@ -99,10 +99,6 @@ public class Profile
     {
         return relatedUser;
     }
-    private void setRelatedUser(User relatedUser)                                                   //??? private or public ???
-    {
-        this.relatedUser = relatedUser;
-    }
 
 
     public Post[] getRelatedPosts()
@@ -158,7 +154,7 @@ public class Profile
 
     private void addOwnProfileToFollowerListOfFollowedProfile(Profile followedProfile)
     {
-        followedProfile.setFollower(this.relatedUser.getRelatedProfile());
+        followedProfile.setFollower(this);
     }
 
 

@@ -2,27 +2,25 @@ package javarumdennnicht;
 
 
 import org.junit.Test;
+
+import java.time.LocalDate;
+
 import static org.junit.Assert.*;
 
 
 
 public class testProfileList
 {
+    User user1 = new User("hansmueller", "12345", "hansmueller@web.de", "Hans", "Müller", LocalDate.of(2000,1,10));
+    User user2 = new User("tomvogt", "98765", "tomvogt@web.de", "Tom", "Vogt", LocalDate.of(1987,3,4));
+    User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt", LocalDate.of(2001,6,13));
+
     @Test
     public void get_profile_should_return_null_if_the_index_is_out_of_bounds_or_the_list_is_empty()
     {
         // Given
-        User user1 = new User();                                                  //??? change when constructor ???
-        user1.setFirstName("Hans");
-        user1.setLastName("Müller");
-        user1.setUsername("hansmueller");
-        User user2 = new User();                                                  //??? change when constructor ???
-        user2.setFirstName("Tom");
-        user2.setLastName("Vogt");
-        user2.setUsername("tomvogt");
-
-        Profile     profile1           = new Profile(user1);
-        Profile     profile2           = new Profile(user2);
+        Profile     profile1           = user1.getRelatedProfile();
+        Profile     profile2           = user2.getRelatedProfile();
         ProfileList filledFollowerList = new ProfileList();
         ProfileList emptyFollowerList  = new ProfileList();
 
@@ -42,17 +40,8 @@ public class testProfileList
     public void follower_number_should_increase_by_1_when_a_profile_follows()
     {
         // Given
-        User user1 = new User();                                                  //??? change when constructor ???
-        user1.setFirstName("Hans");
-        user1.setLastName("Müller");
-        user1.setUsername("hansmueller");
-        User user2 = new User();                                                  //??? change when constructor ???
-        user2.setFirstName("Tom");
-        user2.setLastName("Vogt");
-        user2.setUsername("tomvogt");
-
-        Profile     profile1     = new Profile(user1);
-        Profile     profile2     = new Profile(user2);
+        Profile     profile1     = user1.getRelatedProfile();
+        Profile     profile2     = user2.getRelatedProfile();
         ProfileList followerList = new ProfileList();
 
         // When
@@ -68,17 +57,8 @@ public class testProfileList
     public void following_number_should_increase_by_1_when_you_follow_a_profile()
     {
         // Given
-        User user1 = new User();                                                  //??? change when constructor ???
-        user1.setFirstName("Hans");
-        user1.setLastName("Müller");
-        user1.setUsername("hansmueller");
-        User user2 = new User();                                                  //??? change when constructor ???
-        user2.setFirstName("Hans");
-        user2.setLastName("Müller");
-        user2.setUsername("hansmueller");
-
-        Profile     profile1      = new Profile(user1);
-        Profile     profile2      = new Profile(user2);
+        Profile     profile1      = user1.getRelatedProfile();
+        Profile     profile2      = user2.getRelatedProfile();
         ProfileList followingList = new ProfileList();
 
         // When
@@ -95,22 +75,9 @@ public class testProfileList
     public void removing_a_profile_should_leave_no_empty_entries_in_the_array_list()
     {
         // Given
-        User user1 = new User();                                                  //??? change when constructor ???
-        user1.setFirstName("Hans");
-        user1.setLastName("Müller");
-        user1.setUsername("hansmueller");
-        User user2 = new User();                                                  //??? change when constructor ???
-        user2.setFirstName("Tom");
-        user2.setLastName("Vogt");
-        user2.setUsername("tomvogt");
-        User user3 = new User();                                                  //??? change when constructor ???
-        user3.setFirstName("Dieter");
-        user3.setLastName("Kalt");
-        user3.setUsername("kalterdieter");
-
-        Profile     profile1     = new Profile(user1);
-        Profile     profile2     = new Profile(user2);
-        Profile     profile3     = new Profile(user3);
+        Profile     profile1     = user1.getRelatedProfile();
+        Profile     profile2     = user2.getRelatedProfile();
+        Profile     profile3     = user3.getRelatedProfile();
         ProfileList followerList = new ProfileList();
 
         followerList.addProfile(profile1);
@@ -130,22 +97,9 @@ public class testProfileList
     public void removing_a_profile_should_decrease_the_profile_number_by_1()
     {
         // Given
-        User user1 = new User();                                                  //??? change when constructor ???
-        user1.setFirstName("Hans");
-        user1.setLastName("Müller");
-        user1.setUsername("hansmueller");
-        User user2 = new User();                                                  //??? change when constructor ???
-        user2.setFirstName("Tom");
-        user2.setLastName("Vogt");
-        user2.setUsername("tomvogt");
-        User user3 = new User();                                                  //??? change when constructor ???
-        user3.setFirstName("Dieter");
-        user3.setLastName("Kalt");
-        user3.setUsername("kalterdieter");
-
-        Profile     profile1     = new Profile(user1);
-        Profile     profile2     = new Profile(user2);
-        Profile     profile3     = new Profile(user3);
+        Profile     profile1     = user1.getRelatedProfile();
+        Profile     profile2     = user2.getRelatedProfile();
+        Profile     profile3     = user3.getRelatedProfile();
         ProfileList followerList = new ProfileList();
 
         followerList.addProfile(profile1);
