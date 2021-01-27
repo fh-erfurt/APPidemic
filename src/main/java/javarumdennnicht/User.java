@@ -1,7 +1,7 @@
 package javarumdennnicht;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 
 public class User {
     private String username;
@@ -11,7 +11,6 @@ public class User {
     private String lastName;
     private LocalDate birthdate;
     private final Profile relatedProfile;
-
 
     // Constructor
 
