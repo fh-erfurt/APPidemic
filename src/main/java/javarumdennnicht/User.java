@@ -11,6 +11,17 @@ public class User {
     private LocalDate birthdate;
     private Profile relatedProfile;
 
+    public User(String username, String password, String eMail, String firstName, String lasName, LocalDate birthdate, Profile relatedProfile ){
+        this.username = username;
+        this.password = password;
+        this.eMail = eMail;
+        this.firstName = firstName;
+        this.lastName = lasName;
+        this. birthdate = birthdate;
+        this.relatedProfile = relatedProfile;
+    }
+
+
     public String getUsername() {
         return username;
     }
