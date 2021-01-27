@@ -1,6 +1,5 @@
 package javarumdennnicht;
 
-import java.sql.SQLOutput;
 import java.time.LocalDate;
 
 public class User {
