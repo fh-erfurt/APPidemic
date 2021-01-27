@@ -1,5 +1,6 @@
 package javarumdennnicht;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 
 public class User {
@@ -9,7 +10,7 @@ public class User {
     private String firstName;
     private String lastName;
     private LocalDate birthdate;
-    private Profile relatedProfile;
+    private final Profile relatedProfile;
 
 
     // Constructor
@@ -78,11 +79,21 @@ public class User {
         return relatedProfile;
     }
 
-    public void setRelatedProfile(Profile relatedProfile) {
-        this.relatedProfile = relatedProfile;
-    }
-
     // Other Functions
 
+    public void changePassword(String password1, String password2){
 
+        if(password1==this.password){
+            System.out.println("This is already the set password");}
+
+        else if (password1==password2) {
+            this.setPassword(password1);
+            System.out.println("The password has been successfully changed");
+        }
+
+        else {
+            System.out.println("The first and the seconds entrance are different");
+        }
+
+    }
 }
