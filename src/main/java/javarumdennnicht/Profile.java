@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
 
-public class Profile
+final class Profile
 {
     enum PrivacySetting { PUBLIC, PRIVATE }
 
     private       String          biography;
     private final User            relatedUser;
-    private       ArrayList<Post> posts;
-    private       ArrayList<Post> taggedPosts;
+    private final ArrayList<Post> posts;
+    private final ArrayList<Post> taggedPosts;
     private final ProfileList     followerList;
     private final ProfileList     followingList;
     private       PrivacySetting  privacySetting;
@@ -30,8 +30,8 @@ public class Profile
         this.biography      = "";
         this.followerList   = new ProfileList();
         this.followingList  = new ProfileList();
-        this.posts = new ArrayList<>();
-        this.taggedPosts = new ArrayList<>();
+        this.posts          = new ArrayList<>();
+        this.taggedPosts    = new ArrayList<>();
         this.privacySetting = PrivacySetting.PRIVATE;
     }
 
@@ -75,34 +75,49 @@ public class Profile
         removeUnfollowedProfileFromOwnFollowingList(unfollowedProfile);
     }
 
-    public void newPost(){}
+    public void createAlarm(){}
+
+    //function changePrivacySettings
+
+    //??? function displayPersonalInformation ???
+
+
+
+    // ========================== //
+    // ===== Post Functions ===== //
+    // ========================== //
+    public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
+    {
+        Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
+        post.submitPost(this);
+    }
 
 
     public void addPost(Post post)
     {
         this.posts.add(post);
     }
+
     public void removePost(Post post)
     {
         this.posts.remove(post);
     }
-    public void getPost(int index)
+
+    public Post getPost(int index)
     {
-        this.posts.get(index);
+        return this.posts.get(index);
     }
 
 
     public void addTaggedPost(Post taggedPost)
     {
-        this.taggedPosts.add(taggedPost);
+        this.taggedPosts.add(taggedPost);                   //??? sicherung ???
     }
 
-
-    public void createAlarm(){}
-
-    //function changePrivacySettings
-
-                        //??? function displayPersonalInformation ???
+    public void removeTaggedPost(Post taggedPost)
+    {
+        this.taggedPosts.remove(taggedPost);                //??? sicherung ???
+    }
 
 
 
@@ -126,7 +141,7 @@ public class Profile
     }
 
 
-    public ArrayList<Post> getRelatedPosts()
+    public ArrayList<Post> getPosts()
     {
         return this.posts;
     }
@@ -146,7 +161,7 @@ public class Profile
     {
         return this.followingList;
     }
-    public void setFollowingList(Profile followedProfile)
+    public void setFollowing(Profile followedProfile)
     {
         this.followingList.addProfile(followedProfile);
     }
@@ -181,7 +196,7 @@ public class Profile
 
     private void addFollowedProfileToOwnFollowingList(Profile followedProfile)
     {
-        this.relatedUser.getRelatedProfile().setFollowingList(followedProfile);
+        this.relatedUser.getRelatedProfile().setFollowing(followedProfile);
     }
 
 
