@@ -3,24 +3,24 @@ package javarumdennnicht;
 public class Comment
 {
 
-    private String commenttext;
+    private String commentText;
     private Profile commenter;
 
     // Constructor
     public Comment(Profile commenter, String text)
     {
         this.commenter = commenter;
-        this.commenttext = text;
+        this.commentText = text;
     }
 
     // Setter und Getter
     public String getText()
     {
-        return commenttext;
+        return commentText;
     }
     public void setText(String text)
     {
-        this.commenttext = text;
+        this.commentText = text;
     }
 
     public Profile getCommenter()

@@ -28,9 +28,10 @@ public class Profile
     {
         this.relatedUser    = relatedUser;
         this.biography      = "";
-        this.posts          = null;
         this.followerList   = new ProfileList();
         this.followingList  = new ProfileList();
+        this.posts = new ArrayList<>();
+        this.taggedPosts = new ArrayList<>();
         this.privacySetting = PrivacySetting.PRIVATE;
     }
 
@@ -80,6 +81,14 @@ public class Profile
     public void addPost(Post post)
     {
         this.posts.add(post);
+    }
+    public void removePost(Post post)
+    {
+        this.posts.remove(post);
+    }
+    public void getPost(int index)
+    {
+        this.posts.get(index);
     }
 
 

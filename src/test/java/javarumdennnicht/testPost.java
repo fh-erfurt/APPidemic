@@ -16,9 +16,7 @@ public class testPost{
     @Test
     public void formatted_meetingDate_should_be_in_dd_mm_yyyy_format() {
         // Given
-        Post post = new Post();
-        post.setMeetingDate(LocalDate.of(2010, 9, 20));
-
+        Post post = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2010, 9, 20);
         // When
         String formattedMeetingDate = post.getFormattedMeetingDate();
 
@@ -30,11 +28,7 @@ public class testPost{
     @Test
     public void setting_and_getting_attributes_in_the_Post_should_work_just_fine() {
         // Given
-        Post post = new Post();
-        post.setImageDescription("Hund, an Leine, in Park");
-        post.setPostDescription("Hundespaziergang im Park");
-        post.setMeetingPlace("Berliner Park");
-        post.setMeetingDate(LocalDate.of(2018, 6, 16));
+        Post post = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
 
         // When
         String imageDescription = post.getImageDescription();
@@ -59,5 +53,26 @@ public class testPost{
         // When
 
         // Then
+    }
+
+    @Test
+    public void removing_an_object_from_an_ArrayList_does_not_require_an_index()
+    {
+        // Given
+        Post post1 = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
+        Post post2 = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
+        Post post3 = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
+        Post post4 = new Post(user1.getRelatedProfile(), "Hund, an Leine, in Park", "Hundespaziergang im Park", "Berliner Park", 2018, 6, 16);
+
+        user1.getRelatedProfile().getRelatedPosts().add(post1);
+        user1.getRelatedProfile().getRelatedPosts().add(post2);
+        user1.getRelatedProfile().getRelatedPosts().add(post3);
+        user1.getRelatedProfile().getRelatedPosts().add(post4);
+
+        user1.getRelatedProfile().removePost(post3);
+
+        for(int i = 0; i < user1.getRelatedProfile().getRelatedPosts().size(); i++) {
+            System.out.println(user1.getRelatedProfile().getRelatedPosts().get(i));
+        }
     }
 }

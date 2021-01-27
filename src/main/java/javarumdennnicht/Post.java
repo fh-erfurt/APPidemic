@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Post
 {
     //vielleicht noch nen private Profile author ?
+    private Profile author;
     private ArrayList<Profile> taggedProfiles;
     private ArrayList<Profile> likedByProfiles;
     private int likes;
@@ -21,19 +22,7 @@ public class Post
 
 
     // Constructor
-    public Post()
-    {
-        this.taggedProfiles = new ArrayList<>();
-        this.likedByProfiles = new ArrayList<>();
-        this.likes = likedByProfiles.size();
-        this.imageDescription = "";
-        this.postDescription = "";
-        this.meetingPlace = "";
-        this.meetingDate = LocalDate.of(1111,11,11);
-        this.comments = new ArrayList<>();
-    }
-
-    public Post(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
+    public Post(Profile author,String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
         this.taggedProfiles = new ArrayList<>();
         this.likedByProfiles = new ArrayList<>();
@@ -45,6 +34,12 @@ public class Post
         this.comments = new ArrayList<>();
     }
 
+    public void submitPost(Profile author)
+    {
+       author.addPost(this);
+
+       //for(int i = 0; i <)
+    }
 
     // Von einem Profil geliket/ entliket werden
     public void addLike(Profile liker)
@@ -61,11 +56,11 @@ public class Post
     // Ein Profil (eines Freundes oä) taggen oder enttaggen
     public void addTaggedProfile(Profile taggedProfile)
     {
-        likedByProfiles.add(taggedProfile);
+        taggedProfiles.add(taggedProfile);
     }
-    public void removeTaggedProfile(Profile taggedProfile)
+    public void removeTaggedProfile(Profile untaggedProfile)
     {
-        likedByProfiles.remove(taggedProfile);
+        taggedProfiles.remove(untaggedProfile);
     }
 
     // Ein Kommentar schreiben oder entfernen
