@@ -1,6 +1,7 @@
 package javarumdennnicht;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class User {
     private String username;
@@ -94,5 +95,14 @@ public class User {
             System.out.println("The first and the seconds entrance are different");
         }
 
+    }
+
+    public void changeUsername(UserList userList, String username){
+
+        if(!userList.checkUsernameExistance(username)){
+            this.username=username;
+        }
+
+        else System.out.println("The username already exists");
     }
 }
