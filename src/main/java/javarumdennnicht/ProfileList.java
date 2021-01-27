@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 
-public class ProfileList
+final class ProfileList
 {
     private       int                numberOfProfiles;
     private final ArrayList<Profile> profiles;
@@ -57,14 +57,13 @@ public class ProfileList
 
 
     //gets a profile and removes it from the profiles-ArrayList
-    //cannot use a for-each loop because the index is required to remove the correct profile
     public void removeProfile(Profile profile)
     {
-        for (int index = 0; index < this.profiles.size(); index++)
+        for (Profile p: this.profiles)
         {
-            if (profile == this.profiles.get(index))
+            if (p == profile)
             {
-                this.profiles.remove(index);
+                this.profiles.remove(p);
                 break;
             }
         }
