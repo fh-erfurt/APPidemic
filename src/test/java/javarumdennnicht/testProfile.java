@@ -72,8 +72,8 @@ public class testProfile
         profile1.follow(profile2);
 
         // Then
-        assertEquals("When you follow a profile your profile should be in their FollowerList.",  profile1, profile2.getFollowerList().getProfiles().get(0));
-        assertEquals("When you follow a profile their profile should be in your FollowingList.", profile2, profile1.getFollowingList().getProfiles().get(0));
+        assertEquals("When you follow a profile your profile should be in their FollowerList.",  profile1, profile2.getFollowerList().getProfile(0));
+        assertEquals("When you follow a profile their profile should be in your FollowingList.", profile2, profile1.getFollowingList().getProfile(0));
     }
 
 
