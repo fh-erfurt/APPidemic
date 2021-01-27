@@ -2,6 +2,7 @@ package javarumdennnicht;
 
 
 //import ArrayList class
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 //import date-formatter
 import java.time.format.DateTimeFormatter;
@@ -24,6 +25,7 @@ final class Profile
     // ======================= //
     // ===== Constructor ===== //
     // ======================= //
+
     public Profile(User relatedUser)
     {
         this.relatedUser    = relatedUser;
@@ -62,18 +64,26 @@ final class Profile
         }
         else
         {
-            System.out.println("You're already following this profile!");                               //??? Something else ???
+            System.out.println("You are already following this profile!");
         }
     }
 
 
     public void unfollow(Profile unfollowedProfile)                                                     //!!! add check if you're not following the given profile !!!
     {
-        //remove your current profile from the FollowerList of the profile you are unfollowing
-        removeOwnProfileFromFollowedListOfUnfollowedProfile(unfollowedProfile);
-        //remove the profile you are unfollowing from your own FollowingList
-        removeUnfollowedProfileFromOwnFollowingList(unfollowedProfile);
+        if (profileIsFollowed(unfollowedProfile))
+        {
+            //remove your current profile from the FollowerList of the profile you are unfollowing
+            removeOwnProfileFromFollowedListOfUnfollowedProfile(unfollowedProfile);
+            //remove the profile you are unfollowing from your own FollowingList
+            removeUnfollowedProfileFromOwnFollowingList(unfollowedProfile);
+        }
+        else
+        {
+            System.out.println("A profile that you are not following cannot be unfollowed!");
+        }
     }
+
 
     public void createAlarm(){}
 
@@ -86,6 +96,7 @@ final class Profile
     // ========================== //
     // ===== Post Functions ===== //
     // ========================== //
+
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
         Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
@@ -184,8 +195,25 @@ final class Profile
 
     private boolean profileIsNotAlreadyInFollowingList(Profile followedProfile)
     {
-        return !this.followingList.isProfileAlreadyInList(followedProfile);
+        return !this.getFollowingList().isProfileAlreadyInList(followedProfile);
     }
+
+
+    private boolean profileIsFollowed(Profile unfollowedProfile)
+    {
+        ArrayList<Profile> ownFollowingList = this.getFollowingList().getProfiles();
+
+        for(Profile p: ownFollowingList)
+        {
+            if (p == unfollowedProfile)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
 
     private void addOwnProfileToFollowerListOfFollowedProfile(Profile followedProfile)
@@ -196,18 +224,18 @@ final class Profile
 
     private void addFollowedProfileToOwnFollowingList(Profile followedProfile)
     {
-        this.relatedUser.getRelatedProfile().setFollowing(followedProfile);
+        this.setFollowing(followedProfile);
     }
 
 
     private void removeOwnProfileFromFollowedListOfUnfollowedProfile(Profile unfollowedProfile)
     {
-        unfollowedProfile.getFollowerList().removeProfile(this.getRelatedUser().getRelatedProfile());       // ??? better solution | function currentProfile() ???
+        unfollowedProfile.getFollowerList().removeProfile(this);       // ??? better solution | function currentProfile() ???
     }
 
 
     private void removeUnfollowedProfileFromOwnFollowingList(Profile unfollowedProfile)
     {
-        this.getRelatedUser().getRelatedProfile().getFollowingList().removeProfile(unfollowedProfile);
+        this.getFollowingList().removeProfile(unfollowedProfile);
     }
 }

@@ -96,12 +96,13 @@ public class testProfile
 
         // When
         profile1.unfollow(profile3);
+        profile1.unfollow(profile3);    //trying to unfollow a profile you aren't following
 
         // Then
         assertEquals("When you unfollow a profile your profile should be removed from their FollowerList.", profile2, profile3.getFollowerList().getProfile(0));
-        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.", 1, profile3.getFollowerList().getNumberOfProfiles());
+        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.",              1, profile3.getFollowerList().getNumberOfProfiles());
 
-        assertNull("When you unfollow a profile their profile should be removed from your FollowingList.", profile1.getFollowingList().getProfile(0));
-        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.", 0, profile1.getFollowerList().getNumberOfProfiles());
+        assertNull(  "When you unfollow a profile their profile should be removed from your FollowingList.", profile1.getFollowingList().getProfile(0));
+        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.",     0, profile1.getFollowerList().getNumberOfProfiles());
     }
 }
