@@ -1,6 +1,8 @@
 package javarumdennnicht;
 
 
+//import ArrayList class
+import java.util.ArrayList;
 //import date-formatter
 import java.time.format.DateTimeFormatter;
 
@@ -9,12 +11,13 @@ public class Profile
 {
     enum PrivacySetting { PUBLIC, PRIVATE }
 
-    private       String         biography;
-    private final User           relatedUser;
-    private       Post[]         relatedPosts;    //!!! array list or constant !!!
-    private final ProfileList    followerList;
-    private final ProfileList    followingList;
-    private       PrivacySetting privacySetting;
+    private       String          biography;
+    private final User            relatedUser;
+    private       ArrayList<Post> posts;
+    private       ArrayList<Post> taggedPosts;
+    private final ProfileList     followerList;
+    private final ProfileList     followingList;
+    private       PrivacySetting  privacySetting;
 
 
 
@@ -25,7 +28,7 @@ public class Profile
     {
         this.relatedUser    = relatedUser;
         this.biography      = "";
-        this.relatedPosts   = null;
+        this.posts          = null;
         this.followerList   = new ProfileList();
         this.followingList  = new ProfileList();
         this.privacySetting = PrivacySetting.PRIVATE;
@@ -73,6 +76,19 @@ public class Profile
 
     public void newPost(){}
 
+
+    public void addPost(Post post)
+    {
+        this.posts.add(post);
+    }
+
+
+    public void addTaggedPost(Post taggedPost)
+    {
+        this.taggedPosts.add(taggedPost);
+    }
+
+
     public void createAlarm(){}
 
     //function changePrivacySettings
@@ -87,7 +103,7 @@ public class Profile
 
     public String getBiography()
     {
-        return biography;
+        return this.biography;
     }
     public void setBiography(String biography)
     {
@@ -101,19 +117,15 @@ public class Profile
     }
 
 
-    public Post[] getRelatedPosts()
+    public ArrayList<Post> getRelatedPosts()
     {
-        return relatedPosts;
-    }
-    public void setRelatedPosts(Post[] relatedPosts)
-    {
-        this.relatedPosts = relatedPosts;
+        return this.posts;
     }
 
 
     public ProfileList getFollowerList()
     {
-        return followerList;
+        return this.followerList;
     }
     public void setFollower(Profile follower)
     {
@@ -123,7 +135,7 @@ public class Profile
 
     public ProfileList getFollowingList()
     {
-        return followingList;
+        return this.followingList;
     }
     public void setFollowingList(Profile followedProfile)
     {
@@ -133,7 +145,7 @@ public class Profile
 
     public PrivacySetting getPrivacySetting()
     {
-        return privacySetting;
+        return this.privacySetting;
     }
     public void setPrivacySetting(PrivacySetting privacySetting)
     {
