@@ -17,9 +17,9 @@ public class UserList {
     }
 
     public void addUser(String username, String password, String eMail, String firstName, String lastName, LocalDate birthdate){
-        if (!checkUsernameExistance(username)){
+        if (!checkUsernameExistance(username) && !checkEMailExistance(eMail)){
         userList.add(new User(username, password, eMail, firstName, lastName, birthdate));}
-        else System.out.println("The username is already taken!");
+        else System.out.println("The username or eMail is already taken!");
     }
 
     public void removeUser(String username){
@@ -41,6 +41,17 @@ public class UserList {
             for (User u: this.userList){
                 if (u.getUsername()==username){
                     return true;}
+            }
+        }
+        return false;
+    }
+
+    public boolean checkEMailExistance(String eMail){
+        if (this.userList.size() > 0) {
+            for (User u: this.userList){
+                if( u.getMail()==eMail)){
+                    return true;
+                }
             }
         }
         return false;
