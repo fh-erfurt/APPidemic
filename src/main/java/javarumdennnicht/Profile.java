@@ -9,7 +9,11 @@ import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 
 
-
+/*
+* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* KOMMENTIEREN
+* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* */
 public class Profile
 {
     enum PrivacySetting { PUBLIC, PRIVATE }
@@ -171,10 +175,45 @@ public class Profile
     }
 
 
-
+    //this function displays your personal information depending on their privacy setting
+    //is all personal information is private, only the username will be displayed
     public void displayPersonalInformation()
     {
+        User user = this.getRelatedUser();
+        HashMap<String,PrivacySetting> personalInformation = this.getPrivacyStatusOfPersonalInformation();
 
+        System.out.println("User: " + user.getUsername());
+
+        //iterates through the keys of the privacyStatusOfPersonalInformation-list ("firstname", "lastname" ...)
+        for (String attribute: personalInformation.keySet())
+        {
+            //takes the key from the for-each-loop and gets the associated privacySetting for it
+            if (privacySettingIsPublic(attribute))
+            {
+                switch(attribute)
+                {
+                    case "firstname":
+                        System.out.println("First Name: " + user.getFirstName());
+                        break;
+
+                    case "lastname":
+                        System.out.println("Last Name: " + user.getLastName());
+                        break;
+
+                    case "birthdate":
+                        System.out.println("Birthdate: " + user.getBirthdate());
+                        break;
+
+                    case "email":
+                        System.out.println("E-Mail: " + user.getMail());
+                        break;
+
+                    default:
+                        System.out.println("This personal attribute does not exist.");
+                        break;
+                }
+            }
+        }
     }
 
 
@@ -216,42 +255,45 @@ public class Profile
     }
 
 
+    public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay, ArrayList<Profile> taggedProfiles)
+    {
+        Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
+        post.setTaggedProfiles(taggedProfiles);
+        post.submitPost();
+    }
+
+    //override-function if you don't want to tag any people in your post
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
-        Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);           //??? andere Lösung für tagged people ???
+        Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
         post.submitPost();
     }
 
 
     public void addPost(Post post)
     {
-        this.posts.add(post);
+        this.getPosts().add(post);
     }
 
     public void removePost(Post post)
     {
-        this.posts.remove(post);
+        this.getPosts().remove(post);
     }
 
     public Post getPost(int index)
     {
-        return this.posts.get(index);
+        return this.getPosts().get(index);
     }
 
 
     public void addTaggedPost(Post taggedPost)
     {
-        this.taggedPosts.add(taggedPost);                                                       //??? sicherung ???
+        this.getTaggedPosts().add(taggedPost);
     }
 
     public void removeTaggedPost(Post taggedPost)
     {
-        this.taggedPosts.remove(taggedPost);                                                     //??? sicherung ???
-    }
-
-    public ArrayList<Post> getTaggedPosts()
-    {
-        return this.taggedPosts;
+        this.getTaggedPosts().remove(taggedPost);
     }
 
 
@@ -279,6 +321,11 @@ public class Profile
     public ArrayList<Post> getPosts()
     {
         return this.posts;
+    }
+
+    public ArrayList<Post> getTaggedPosts()
+    {
+        return this.taggedPosts;
     }
 
 
@@ -375,6 +422,12 @@ public class Profile
     private boolean privacySettingIsPublic()
     {
         return this.getPrivacySetting() == PrivacySetting.PUBLIC;
+    }
+
+
+    private boolean privacySettingIsPublic(String attribute)
+    {
+        return this.getPrivacyStatusOfPersonalInformation().get(attribute) == PrivacySetting.PUBLIC;
     }
 
 }
