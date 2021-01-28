@@ -24,6 +24,7 @@ public class Post
     // Constructor
     public Post(Profile author,String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
+        this.author = author;
         this.taggedProfiles = new ArrayList<>();
         this.likedByProfiles = new ArrayList<>();
         this.likes = 0;
@@ -76,9 +77,23 @@ public class Post
         comments.remove(removedComment);
     }
 
+    // Methode um den Inhalt eines Posts leicht zu überprüfen
+    public void viewPost(Post post)
+    {
+        System.out.println( this.getAuthor().getRelatedUser().getUsername()+
+                            "\n------------------------------------\n"+
+                            post.getImageDescription()+
+                            "\n------------------------------------\n"+
+                            post.getPostDescription()+
+                            "\n------------------------------------\n"+
+                            post.getMeetingPlace()+
+                            "\n------------------------------------\n"+
+                            post.getFormattedMeetingDate());
+    }
 
 
-    // Setter und Getter???
+
+    // Setter und Getter
     public ArrayList<Profile> getTaggedProfiles()
     {
         return taggedProfiles;
@@ -86,6 +101,15 @@ public class Post
     public void setTaggedProfiles(ArrayList<Profile> newTaggedProfiles)
     {
         this.taggedProfiles = newTaggedProfiles;
+    }
+
+    public Profile getAuthor()
+    {
+        return author;
+    }
+    public void setAuthor(Profile author)
+    {
+        this.author = author;
     }
 
     public String getImageDescription()
@@ -145,4 +169,7 @@ public class Post
     {
         this.comments = comments;
     }
+
 }
+
+
