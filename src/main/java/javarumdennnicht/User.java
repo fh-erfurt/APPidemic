@@ -80,20 +80,19 @@ public class User {
 
     // Other Functions
 
-    public void changePassword(String password1, String password2){
+    public void changePassword(String oldPassword,String password1, String password2) {
+        if (oldPassword == this.password) {
+            if (password1 == this.password) {
+                System.out.println("This is already the set password");
+            } else if (password1 == password2) {
+                this.setPassword(password1);
+                System.out.println("The password has been successfully changed");
+            } else {
+                System.out.println("The first and the seconds entrance are different");
+            }
 
-        if(password1==this.password){
-            System.out.println("This is already the set password");}
-
-        else if (password1==password2) {
-            this.setPassword(password1);
-            System.out.println("The password has been successfully changed");
         }
-
-        else {
-            System.out.println("The first and the seconds entrance are different");
-        }
-
+        else System.out.println("The old password is incorrect");
     }
 
     public void changeUsername(UserList userList, String username){
@@ -103,5 +102,14 @@ public class User {
         }
 
         else System.out.println("The username already exists");
+    }
+
+    public void changeEMailAdress(UserList userList, String eMail){
+
+        if(!userList.checkEMailExistance(eMail)){
+            this.eMail=eMail;
+        }
+
+        else System.out.println("The eMail is already taken");
     }
 }

@@ -8,6 +8,8 @@ public class UserList {
 
     private ArrayList<User> userList;
 
+    //Constructor
+
     public UserList(){
         this.userList= new ArrayList<>();
     }
