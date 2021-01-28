@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 public class Post
 {
-    //vielleicht noch nen private Profile author ?
     private Profile author;
     private ArrayList<Profile> taggedProfiles;
     private ArrayList<Profile> likedByProfiles;
@@ -48,12 +47,12 @@ public class Post
     public void addLike(Profile liker)
     {
         likedByProfiles.add(liker);
-        likes = likedByProfiles.size();
+        this.setLikes(likedByProfiles.size());
     }
     public void removeLike(Profile removedLiker)
     {
         likedByProfiles.remove(removedLiker);
-        likes = likedByProfiles.size();
+       this.setLikes(likedByProfiles.size());
     }
 
     // Ein Profil (eines Freundes oä) taggen oder enttaggen
@@ -66,7 +65,7 @@ public class Post
         taggedProfiles.remove(untaggedProfile);
     }
 
-    // Ein Kommentar schreiben oder entfernen
+    // Ein Kommentar schreiben und der comments ArrayList hinzufügen oder entfernen
     public void addComment(Profile Commenter, String commentedText)
     {
         Comment newComment = new Comment(Commenter, commentedText);
@@ -77,18 +76,18 @@ public class Post
         comments.remove(removedComment);
     }
 
-    // Methode um den Inhalt eines Posts leicht zu überprüfen
+    // Methode um alle Inhalte eines Posts leicht zu überprüfen
     public void viewPost(Post post)
     {
-        System.out.println( this.getAuthor().getRelatedUser().getUsername()+
-                            "\n------------------------------------\n"+
-                            post.getImageDescription()+
-                            "\n------------------------------------\n"+
-                            post.getPostDescription()+
-                            "\n------------------------------------\n"+
-                            post.getMeetingPlace()+
-                            "\n------------------------------------\n"+
-                            post.getFormattedMeetingDate());
+        System.out.println(this.getAuthor().getRelatedUser().getUsername());
+        System.out.println("------------------------------------");
+        System.out.println( post.getImageDescription());
+        System.out.println("------------------------------------");
+        System.out.println( post.getPostDescription());
+        System.out.println("------------------------------------");
+        System.out.println(post.getMeetingPlace());
+        System.out.println("------------------------------------");
+        System.out.println(post.getFormattedMeetingDate());
     }
 
 
@@ -158,7 +157,10 @@ public class Post
     {
         return likedByProfiles.size();
     }
-    // kein set likes, da das ja nicht so leicht beinflusst werden kann, ohne die ganze ArrayList zu ändern
+    public void setLikes(int likeCount)
+    {
+        this.likes = likeCount;
+    }
 
 
     public ArrayList<Comment> getComments()
