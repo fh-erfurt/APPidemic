@@ -30,7 +30,7 @@ public final class Post
         this.imageDescription = imageDescription;
         this.postDescription = postDescription;
         this.meetingPlace = meetingPlace;
-        this.meetingDate = LocalDate.of(meetingYear,meetingMonth,meetingDay);
+        this.meetingDate = LocalDate.of(meetingYear,meetingMonth,meetingDay); // fuses the given Integers to a date
         this.comments = new ArrayList<>();
     }
 
@@ -76,13 +76,13 @@ public final class Post
         Comment newComment = new Comment(Commenter, commentedText);
         comments.add(newComment);
     }
-    // removes a comment from the comments list                                                                                                                                     for when u get called out for your bigotry
+    // removes a comment from the comments list
     public void removeComment(Comment removedComment)
     {
         comments.remove(removedComment);
     }
 
-    // Methode um alle Inhalte eines Posts leicht zu überprüfen
+    // shows a good overview of the post in the console log
     public void viewPost(Post post)
     {
         System.out.println(this.getAuthor().getRelatedUser().getUsername());

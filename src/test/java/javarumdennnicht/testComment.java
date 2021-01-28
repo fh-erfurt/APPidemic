@@ -9,6 +9,8 @@ public class testComment
 {
     User user1 = new User("hansmueller", "12345", "hansmueller@web.de", "Hans", "Müller", LocalDate.of(2000,1,10));
 
+
+    // tests the constructor and the getter
     @Test
     public void creating_a_comment_and_getting_its_contents_should_deliver_the_given_attributes()
     {
@@ -23,7 +25,7 @@ public class testComment
         assertEquals("If you created a comment, the getCommenter method should deliver the passed Commenter: ", profile1, comment.getCommenter());
 
     }
-
+    // tests the setter
     @Test
     public void setting_new_parameters_for_a_comment_and_getting_its_contents_should_deliver_the_new_attributes()
     {
