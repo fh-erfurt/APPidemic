@@ -49,7 +49,7 @@ public class UserList {
     public boolean checkEMailExistance(String eMail){
         if (this.userList.size() > 0) {
             for (User u: this.userList){
-                if( u.getMail()==eMail)){
+                if( u.getMail()==eMail){
                     return true;
                 }
             }
