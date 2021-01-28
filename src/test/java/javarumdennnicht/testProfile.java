@@ -4,19 +4,18 @@ package javarumdennnicht;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
+
 //import for println()-assertEquals-check
 //Source:   https://coderanch.com/t/587280/java/assertEquals-println
 //          https://www.techiedelight.com/print-newline-java/
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.time.LocalDate;
 
 
 
 public class testProfile
 {
-    enum PrivacySetting { PUBLIC, PRIVATE }
-
     //users used for all the tests, to prevent duplicated code they are declared here so every test can use them
     private final User user1 = new User("hansmueller",  "12345", "hansmueller@web.de",  "Hans",   "Müller", LocalDate.of(2000,1,10));
     private final User user2 = new User("tomvogt",      "98765", "tomvogt@web.de",      "Tom",    "Vogt",   LocalDate.of(1987,3, 4));
@@ -24,6 +23,9 @@ public class testProfile
 
 
 
+    // ======================================== //
+    // ===== TEST getFormattedBirthdate() ===== //
+    // ======================================== //
     @Test
     public void formatted_birthdate_should_be_in_dd_mm_yyyy_format()
     {
@@ -41,6 +43,9 @@ public class testProfile
 
 
 
+    // ============================ //
+    // ===== TEST relatedUser ===== //
+    // ============================ //
     @Test
     public void profile_can_access_user_data()
     {
@@ -62,6 +67,9 @@ public class testProfile
 
 
 
+    // ========================= //
+    // ===== TEST follow() ===== //
+    // ========================= //
     @Test
     public void following_a_profile_should_add_your_profile_to_their_follower_list_and_their_profile_to_your_following_list()
     {
@@ -101,6 +109,9 @@ public class testProfile
 
 
 
+    // =========================== //
+    // ===== TEST unfollow() ===== //
+    // =========================== //
     @Test
     public void unfollow_a_profile_should_remove_your_profile_from_their_follower_list_and_their_profile_from_your_following_list()
     {
@@ -120,14 +131,38 @@ public class testProfile
 
         // THEN
         assertEquals("When you unfollow a profile your profile should be removed from their FollowerList.", profile2, profile3.getFollowerList().getProfile(0));
-        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.",              1, profile3.getFollowerList().getNumberOfProfiles());
+        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.", 1, profile3.getFollowerList().getNumberOfProfiles());
 
         assertNull(  "When you unfollow a profile their profile should be removed from your FollowingList.", profile1.getFollowingList().getProfile(0));
-        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.",     0, profile1.getFollowerList().getNumberOfProfiles());
+        assertEquals("When you unfollow a profile their FollowerCount should decrease by 1.", 0, profile1.getFollowerList().getNumberOfProfiles());
     }
 
 
 
+    // ================================== //
+    // ===== TEST Privacy-Functions ===== //
+    // ================================== //
+    @Test
+    public void privacy_status_of_personal_information_can_be_all_changed_at_once()
+    {
+        // GIVEN
+        Profile profile = user1.getRelatedProfile();
+
+        // WHEN
+        profile.changePrivacyStatusOfPersonalInformation(Profile.PrivacySetting.PRIVATE, Profile.PrivacySetting.PUBLIC, Profile.PrivacySetting.PUBLIC, Profile.PrivacySetting.PRIVATE);
+
+        // THEN
+        assertEquals("You should be able to change the privacy of a personal attribute.", Profile.PrivacySetting.PRIVATE, profile.getPrivacyStatusOfPersonalInformation().get("firstname"));
+        assertEquals("You should be able to change the privacy of a personal attribute.", Profile.PrivacySetting.PUBLIC,  profile.getPrivacyStatusOfPersonalInformation().get("lastname"));
+        assertEquals("You should be able to change the privacy of a personal attribute.", Profile.PrivacySetting.PUBLIC,  profile.getPrivacyStatusOfPersonalInformation().get("birthdate"));
+        assertEquals("You should be able to change the privacy of a personal attribute.", Profile.PrivacySetting.PRIVATE, profile.getPrivacyStatusOfPersonalInformation().get("email"));
+    }
+
+
+
+    // ============================ //
+    // ===== TEST showPosts() ===== //
+    // ============================ //
     @Test
     public void accessing_posts_of_a_public_profile_should_always_display_their_posts()
     {
@@ -164,6 +199,10 @@ public class testProfile
         assertEquals("Following and non-following profiles should have access to posts of public profiles.",
                      "Bild: Bild ProfilePublic" + newLine + "Bild: Bild ProfilePublic" + newLine,
                      outContent.toString());
+
+
+        //Reset System.out to print in console again:
+        //System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     }
 
 
