@@ -169,6 +169,10 @@ final class Profile
         this.taggedPosts.remove(taggedPost);                                                     //??? sicherung ???
     }
 
+    public ArrayList<Post> getTaggedPosts()
+    {
+        return this.taggedPosts;
+    }
 
 
     // =========================== //
