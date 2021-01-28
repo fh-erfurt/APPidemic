@@ -3,13 +3,18 @@ package javarumdennnicht;
 
 //import ArrayList class
 import java.util.ArrayList;
+//import HashMap<> for personalInformation
+import java.util.HashMap;
 //import date-formatter
 import java.time.format.DateTimeFormatter;
 
 
-final class Profile
+
+public class Profile
 {
-    enum PrivacySetting { PUBLIC, PRIVATE }                                     //??? auslagern ???
+    enum PrivacySetting { PUBLIC, PRIVATE }
+
+    private final HashMap<String, PrivacySetting> privacyStatusOfPersonalInformation;
 
     private       String          biography;
     private final User            relatedUser;
@@ -34,13 +39,16 @@ final class Profile
         this.posts          = new ArrayList<>();
         this.taggedPosts    = new ArrayList<>();
         this.privacySetting = PrivacySetting.PRIVATE;
+
+        this.privacyStatusOfPersonalInformation = new HashMap<>();
+        setPersonalInformationToPrivate();
     }
 
 
 
-    // =============================== //
-    // ===== Functions / Methods ===== //
-    // =============================== //
+    // ============================= //
+    // ===== General Functions ===== //
+    // ============================= //
 
     //LocalDate is in format yyyy-mm-dd
     //this function formats it into dd-mm-yyyy format
@@ -51,6 +59,20 @@ final class Profile
         return getRelatedUser().getBirthdate().format(dateFormat);
     }
 
+
+    private void setPersonalInformationToPrivate()
+    {
+        this.privacyStatusOfPersonalInformation.put("firstname", PrivacySetting.PRIVATE);
+        this.privacyStatusOfPersonalInformation.put("lastname",  PrivacySetting.PRIVATE);
+        this.privacyStatusOfPersonalInformation.put("birthdate", PrivacySetting.PRIVATE);
+        this.privacyStatusOfPersonalInformation.put("email",     PrivacySetting.PRIVATE);
+    }
+
+
+
+    // ============================= //
+    // ===== Profile Functions ===== //
+    // ============================= //
 
     public void follow(Profile followedProfile)
     {
@@ -70,7 +92,7 @@ final class Profile
     }
 
 
-    public void unfollow(Profile unfollowedProfile)                                                     //!!! add check if you're not following the given profile !!!
+    public void unfollow(Profile unfollowedProfile)
     {
         if (profileIsFollowed(unfollowedProfile))
         {
@@ -81,16 +103,85 @@ final class Profile
         }
         else
         {
+            //replacement for "Unfollow"-button displaying "Follow"
             System.out.println("A profile that you are not following cannot be unfollowed!");
         }
     }
 
 
+    //this function is used for warning all persons you tagged in your posts, or tagged you in their posts
+    //in case you get tested positive with Corona
     public void createAlarm()
     {
 
     }
 
+
+
+    // ============================= //
+    // ===== Privacy Functions ===== //
+    // ============================= //
+
+    public void changePrivacyStatusOfPersonalInformation(PrivacySetting firstname, PrivacySetting lastname, PrivacySetting birthdate, PrivacySetting email)
+    {
+        //for-each-loop iterates through the keys of the personalInformation-HashMap ("firstname", "lastname" ...)
+        for (String attribute: getPrivacyStatusOfPersonalInformation().keySet())
+        {
+            switch(attribute)
+            {
+                case "firstname":
+                    getPrivacyStatusOfPersonalInformation().put(attribute, firstname);
+                    break;
+
+                case "lastname":
+                    getPrivacyStatusOfPersonalInformation().put(attribute, lastname);
+                    break;
+
+                case "birthdate":
+                    getPrivacyStatusOfPersonalInformation().put(attribute, birthdate);
+                    break;
+
+                case "email":
+                    getPrivacyStatusOfPersonalInformation().put(attribute, email);
+                    break;
+
+                default:
+                    System.out.println("This personal information does not exist.");
+                    break;
+            }
+        }
+    }
+
+
+    //override-function if you want change the privacy-setting of a specific attribute
+    public void changePrivacyStatusOfPersonalInformation(String attribute, PrivacySetting setting)
+    {
+        for (String key: getPrivacyStatusOfPersonalInformation().keySet())
+        {
+            //check if the given attribute is a valid key in the privacyStatusOfPersonalInformation-HashMap
+            if (key.equals(attribute))
+            {
+                getPrivacyStatusOfPersonalInformation().put(attribute, setting);
+                //exit the function if the attribute is a valid key
+                return;
+            }
+        }
+        //print error if the attribute was not a valid key
+        System.out.println("This personal attribute does not exist.");
+    }
+
+
+
+    public void displayPersonalInformation()
+    {
+
+    }
+
+
+
+    // ========================== //
+    // ===== Post Functions ===== //
+    // ========================== //
 
     //this method either displays or hides your posts from a profile that wants to access your posts
     //if your PrivacySetting is on PUBLIC everyone can see your posts
@@ -110,7 +201,7 @@ final class Profile
         }
 
         if (    privacySettingIsPrivate() && profileIsInFollowingList
-             || privacySettingIsPublic() )
+                || privacySettingIsPublic() )
         {
             for(Post p: this.getPosts())
             {
@@ -124,17 +215,6 @@ final class Profile
         }
     }
 
-
-
-    //function changePrivacySettings
-
-    //??? function displayPersonalInformation ???
-
-
-
-    // ========================== //
-    // ===== Post Functions ===== //
-    // ========================== //
 
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
@@ -173,6 +253,7 @@ final class Profile
     {
         return this.taggedPosts;
     }
+
 
 
     // =========================== //
@@ -228,6 +309,12 @@ final class Profile
     public void setPrivacySetting(PrivacySetting privacySetting)
     {
         this.privacySetting = privacySetting;
+    }
+
+
+    public HashMap<String, PrivacySetting> getPrivacyStatusOfPersonalInformation()
+    {
+        return this.privacyStatusOfPersonalInformation;
     }
 
 
