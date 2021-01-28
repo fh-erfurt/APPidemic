@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 
 
-final class ProfileList
+public class ProfileList
 {
     private       int                numberOfProfiles;
     private final ArrayList<Profile> profiles;
