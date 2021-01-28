@@ -140,7 +140,7 @@ public class testPost
         //When
         post.addTaggedProfile(profile2);
         post.addTaggedProfile(profile3);
-        post.submitPost(profile1);
+        post.submitPost();
 
         // Then
         assertEquals("The post should now be in the posts ArrayList for the author(profile1), since it has been submitted: ", 1,profile1.getPosts().size());
@@ -158,7 +158,7 @@ public class testPost
         Post post = new Post(profile1, "3 Menschen, in Bar, trinken Alkohol", "Schön in kleiner runde gehoben ;-)","Arche Noah, Erfurt", 2018, 8, 6);
 
         // When
-        post.submitPost(profile1);
+        post.submitPost();
         post.addLike(profile2);
         post.addLike(profile3);
 
@@ -176,7 +176,7 @@ public class testPost
         Post post = new Post(profile1, "3 Menschen, in Bar, trinken Alkohol", "Schön in kleiner runde gehoben ;-)","Arche Noah, Erfurt", 2018, 8, 6);
 
         // When
-        post.submitPost(profile1);
+        post.submitPost();
         post.addLike(profile2);
         post.addLike(profile3);
         post.removeLike(profile3);

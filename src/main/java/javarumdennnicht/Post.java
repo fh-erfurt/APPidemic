@@ -5,13 +5,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public class Post
+public final class Post
 {
     private Profile author;
     private ArrayList<Profile> taggedProfiles;
     private ArrayList<Profile> likedByProfiles;
     private int likes;
-    private String imageDescription; // Da wir keine Bilder einfügen können tun wir so als wären das welche
+    private String imageDescription;            // describes what you can see in the hypothetical picture
     private String postDescription;
     private String meetingPlace;
     private LocalDate meetingDate;
@@ -20,7 +20,7 @@ public class Post
 
 
 
-    // Constructor
+    // Constructor for the purpose of initializing an object with those passed parameter
     public Post(Profile author,String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
         this.author = author;
@@ -34,16 +34,19 @@ public class Post
         this.comments = new ArrayList<>();
     }
 
-    public void submitPost(Profile author)
+    // this method "submits" a post, which is used if the user wants to finish tagging people and uploads it to the side officially
+    // it adds the post to the ArrayList of posts by the author and for every tagged profile it adds the post to the ArrayList of their taggedPosts (which are the posts they have been tagged in)
+    public void submitPost()
     {
-       author.addPost(this);
+       this.getAuthor().addPost(this);
 
         for (Profile taggedProfile : this.taggedProfiles) {
             taggedProfile.addTaggedPost(this);
         }
     }
 
-    // Von einem Profil geliket/ entliket werden
+    // this method adds a like by the passed profile to the post
+    // the like count rises and the liking profile is added to the likedBy ArrayList of the post
     public void addLike(Profile liker)
     {
         likedByProfiles.add(liker);
@@ -55,22 +58,25 @@ public class Post
        this.setLikes(likedByProfiles.size());
     }
 
-    // Ein Profil (eines Freundes oä) taggen oder enttaggen
+    // method used for tagging friends or others on a post, which adds them to the taggedProfiles list and
+    // after using the submitPost method the post is posted on the tagged profiles
     public void addTaggedProfile(Profile taggedProfile)
     {
         taggedProfiles.add(taggedProfile);
     }
+    // removes a tagged profile
     public void removeTaggedProfile(Profile untaggedProfile)
     {
         taggedProfiles.remove(untaggedProfile);
     }
 
-    // Ein Kommentar schreiben und der comments ArrayList hinzufügen oder entfernen
+    // used to write a comment with a given profile and adds it to the comments list, containing every commented comment :)
     public void addComment(Profile Commenter, String commentedText)
     {
         Comment newComment = new Comment(Commenter, commentedText);
         comments.add(newComment);
     }
+    // removes a comment from the comments list                                                                                                                                     for when u get called out for your bigotry
     public void removeComment(Comment removedComment)
     {
         comments.remove(removedComment);

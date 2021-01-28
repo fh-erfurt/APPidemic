@@ -219,7 +219,7 @@ public class Profile
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
         Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);           //??? andere Lösung für tagged people ???
-        post.submitPost(this);
+        post.submitPost();
     }
 
 
