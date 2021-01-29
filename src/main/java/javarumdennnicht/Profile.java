@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 //import date-formatter
 import java.time.format.DateTimeFormatter;
-
+//import iterator for for-each loops
+import java.util.Iterator;
 
 
 /*
@@ -85,31 +86,6 @@ public class Profile
     }
 
 
-    //checks if two profiles are following each other
-    //if they do, the profile of @followers is stored in @befriended
-    //                                                                                                                  !!!!!!! DESCRIPTION !!!!!!!
-    //private ArrayList<Profile> getBefriendedProfiles(ArrayList<Profile> following, ArrayList<Profile> followers)
-    //{
-    //    ArrayList<Profile> profilesImFollowing = this.getFollowingList().getProfiles();
-    //    ArrayList<Profile> befriended          = new ArrayList<>();
-//
-//
-    //    for (Profile pif: profilesImFollowing)
-    //    {
-    //        ArrayList<Profile> followedProfilesOfProfilesImFollowing = pif.getFollowingList().getProfiles();
-//
-    //        for (Profile fp: followedProfilesOfProfilesImFollowing)
-    //        {
-    //            if (pif == fp)      //!!! CONTAINS !!!
-    //            {
-    //                befriended.add(fp);
-    //            }
-    //        }
-    //    }
-//
-    //    return befriended;
-    //}
-
 
     // ============================= //
     // ===== PROFILE FUNCTIONS ===== //
@@ -117,8 +93,8 @@ public class Profile
 
     public void follow(Profile followedProfile)
     {
-        //only enable to follow a profile if you aren't already following it
-        if (profileIsNotAlreadyInFollowingList(followedProfile))
+        //only enable to follow a profile if you aren't already following it and if the profile is not itself
+        if (profileIsNotAlreadyInFollowingList(followedProfile) && profileIsNotItself(followedProfile))
         {
             //add your current profile to the FollowerList of the profile you want to follow
             addOwnProfileToFollowerListOfFollowedProfile(followedProfile);
@@ -178,7 +154,7 @@ public class Profile
         ArrayList<Post>    postsIAmTaggedIn = this.getTaggedPosts();
 
 
-        //loop through my own posts
+        //loop through profiles own posts
         for (Post post: myPosts)
         {
             //get all tagged profiles from current post
@@ -191,6 +167,7 @@ public class Profile
                 }
             }
         }
+
 
         //loop through posts you are tagged in and are not your own posts
         for (Post taggedPost: postsIAmTaggedIn)                                                           //!!! also get author !!!
@@ -207,25 +184,59 @@ public class Profile
         }
 
 
+        //set iterator for taggedProfiles so .remove() can be used properly
+        Iterator<Profile> i_profiles = taggedProfiles.iterator();
+
         //check which of the tagged profiles I am following and remove all tagged profiles I am not following
         //after that taggedProfiles only contains @taggedProfiles that I am following
-        for (Profile tagged: taggedProfiles)
+        while (i_profiles.hasNext())
         {
-            if (!followedProfiles.contains(tagged))
+            //must be called here so profile.remove() can be used
+            Profile p = i_profiles.next();
+
+            //if my FollowingList does not contain the profile from the taggedProfiles it gets removed
+            if (!followedProfiles.contains(p))
             {
-                taggedProfiles.remove(tagged);
+                i_profiles.remove();
             }
         }
 
+
+        //pass the iterator the new taggedProfiles-list
+        i_profiles = taggedProfiles.iterator();
+
         //check which of the taggedProfiles I am following are following me back
         //after that only befriended profiles are in @taggedProfiles
-        for (Profile tagged: taggedProfiles)
+        while (i_profiles.hasNext())
         {
-            if (!followers.contains(tagged))
+            Profile p = i_profiles.next();
+
+            //if my FollowerList does not contain the profile from the taggedProfiles it gets removed
+            if (!followers.contains(p))
             {
-                taggedProfiles.remove(tagged);
+                i_profiles.remove();
             }
         }
+
+
+        //for (Profile tagged: taggedProfiles)
+        //{
+        //    if (!followedProfiles.contains(tagged))
+        //    {
+        //        taggedProfiles.remove(tagged);
+        //    }
+        //}
+
+        //check which of the taggedProfiles I am following are following me back                                    //!!! DELETE !!!
+        //after that only befriended profiles are in @taggedProfiles
+        //for (Profile tagged: taggedProfiles)
+        //{
+        //    if (!followers.contains(tagged))
+        //    {
+        //        taggedProfiles.remove(tagged);
+        //    }
+        //}
+
 
         //trigger the alarm on all befriended profiles that are tagged
         for (Profile befriended: taggedProfiles)
@@ -238,7 +249,9 @@ public class Profile
     //if a profile created an alarm and you are befriended with it, you will get a notification
     public void triggerAlarm()
     {
-        System.out.println("ALARM");
+        String username = this.getRelatedUser().getUsername();
+
+        System.out.println(username + ": ALARM");
         this.setAlarmIsTriggered(true);
     }
 
@@ -519,6 +532,11 @@ public class Profile
     // =============================== //
     // ===== EXTRACTED FUNCTIONS ===== //
     // =============================== //
+
+    private boolean profileIsNotItself(Profile followedProfile)
+    {
+        return !(followedProfile == this);
+    }
 
     private boolean profileIsNotAlreadyInFollowingList(Profile followedProfile)
     {
