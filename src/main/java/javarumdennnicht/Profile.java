@@ -9,8 +9,9 @@ import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 
 
+
 /*
-* [CLASS PROFILE]
+* CLASS PROFILE
 * This class contains the non-user relevant information. It is the social face of the person that made the account.
 * You can decide which personal information is shown publicly and which is not, except your username.
 * It is possible to follow/unfollow other people and create posts with or without tagged profiles.
@@ -35,7 +36,7 @@ public class Profile
 
 
     // ======================= //
-    // ===== Constructor ===== //
+    // ===== CONSTRUCTOR ===== //
     // ======================= //
 
     public Profile(User relatedUser)
@@ -55,7 +56,7 @@ public class Profile
 
 
     // ============================= //
-    // ===== General functions ===== //
+    // ===== GENERAL FUNCTIONS ===== //
     // ============================= //
 
     //LocalDate is in format yyyy-mm-dd
@@ -79,7 +80,7 @@ public class Profile
 
 
     // ============================= //
-    // ===== Profile functions ===== //
+    // ===== PROFILE FUNCTIONS ===== //
     // ============================= //
 
     public void follow(Profile followedProfile)
@@ -117,19 +118,33 @@ public class Profile
     }
 
 
-    //this function is used for warning all persons you tagged in your posts, or tagged you in their posts
-    //in case you get tested positive with Corona
+
+    // =========================== //
+    // ===== ALARM FUNCTIONS ===== //
+    // =========================== //
+
+    //creates a warning for all befriended persons you tagged in your posts, or that tagged you in their
+    //posts in case you get tested positive with Corona
     public void createAlarm()
     {
 
     }
 
 
+    //if a profile created an alarm and you are befriended with it, you will get a notification
+    public void alarmTriggered()
+    {
+        System.out.println("ALARM");
+    }
+
+
 
     // ============================= //
-    // ===== Privacy functions ===== //
+    // ===== PRIVACY FUNCTIONS ===== //
     // ============================= //
 
+    //change the privacy setting of all personal information at once
+    //to change the privacy setting of only one attribute, use the override-method below this one
     public void changePrivacyStatusOfPersonalInformation(PrivacySetting firstname, PrivacySetting lastname, PrivacySetting birthdate, PrivacySetting email)
     {
         //for-each-loop iterates through the keys of the personalInformation-HashMap ("firstname", "lastname" ...)
@@ -161,7 +176,7 @@ public class Profile
     }
 
 
-    //override-function if you want change the privacy-setting of a specific attribute
+    //override-method if you want change the privacy-setting of a specific personal attribute
     public void changePrivacyStatusOfPersonalInformation(String attribute, PrivacySetting setting)
     {
         for (String key: getPrivacyStatusOfPersonalInformation().keySet())
@@ -179,8 +194,8 @@ public class Profile
     }
 
 
-    //this function displays your personal information depending on their privacy setting
-    //is all personal information is private, only the username will be displayed
+    //display your personal information depending on their privacy setting
+    //if all personal information is private, only the username will be displayed
     public void displayPersonalInformation()
     {
         User user = this.getRelatedUser();
@@ -223,7 +238,7 @@ public class Profile
 
 
     // ========================== //
-    // ===== Post functions ===== //
+    // ===== POST FUNCTIONS ===== //
     // ========================== //
 
     //this method either displays or hides your posts from a profile that wants to access your posts
@@ -259,6 +274,8 @@ public class Profile
     }
 
 
+    //creates a new post, tags the given profiles on it and "uploads" the post on your profile and on all profiles you tagged
+    //if you want to tag profiles, they have to be passed in an ArrayList, if no tags are needed the override-method below can be used
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay, ArrayList<Profile> taggedProfiles)
     {
         Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
@@ -266,7 +283,7 @@ public class Profile
         post.submitPost();
     }
 
-    //override-function if you don't want to tag any people in your post
+    //override-method if you don't want to tag profiles in your post
     public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay)
     {
         Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
@@ -303,7 +320,7 @@ public class Profile
 
 
     // =========================== //
-    // ===== Getter & Setter ===== //
+    // ===== GETTER & SETTER ===== //
     // =========================== //
 
     public String getBiography()
@@ -370,9 +387,9 @@ public class Profile
 
 
 
-    // ============================= //
-    // ===== Extracted Methods ===== //
-    // ============================= //
+    // =============================== //
+    // ===== EXTRACTED FUNCTIONS ===== //
+    // =============================== //
 
     private boolean profileIsNotAlreadyInFollowingList(Profile followedProfile)
     {
