@@ -10,9 +10,13 @@ import java.time.format.DateTimeFormatter;
 
 
 /*
-* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-* KOMMENTIEREN
-* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+* [CLASS PROFILE]
+* This class contains the non-user relevant information. It is the social face of the person that made the account.
+* You can decide which personal information is shown publicly and which is not, except your username.
+* It is possible to follow/unfollow other people and create posts with or without tagged profiles.
+* Most importantly you can create an alarm in case you get get tested positive with Covid-19. This will notify all persons
+* you tagged in your post and people that tagged you in their post. This only works for profiles that you are befriended
+* (you follow them and they follow you) to protect abuse of this feature.
 * */
 public class Profile
 {
@@ -51,7 +55,7 @@ public class Profile
 
 
     // ============================= //
-    // ===== General Functions ===== //
+    // ===== General functions ===== //
     // ============================= //
 
     //LocalDate is in format yyyy-mm-dd
@@ -75,7 +79,7 @@ public class Profile
 
 
     // ============================= //
-    // ===== Profile Functions ===== //
+    // ===== Profile functions ===== //
     // ============================= //
 
     public void follow(Profile followedProfile)
@@ -123,7 +127,7 @@ public class Profile
 
 
     // ============================= //
-    // ===== Privacy Functions ===== //
+    // ===== Privacy functions ===== //
     // ============================= //
 
     public void changePrivacyStatusOfPersonalInformation(PrivacySetting firstname, PrivacySetting lastname, PrivacySetting birthdate, PrivacySetting email)
@@ -219,7 +223,7 @@ public class Profile
 
 
     // ========================== //
-    // ===== Post Functions ===== //
+    // ===== Post functions ===== //
     // ========================== //
 
     //this method either displays or hides your posts from a profile that wants to access your posts
