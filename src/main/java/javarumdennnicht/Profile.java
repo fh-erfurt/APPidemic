@@ -21,17 +21,22 @@ import java.time.format.DateTimeFormatter;
 * */
 public class Profile
 {
+    // ===================== //
+    // ===== VARIABLES ===== //
+    // ===================== //
+
     enum PrivacySetting { PUBLIC, PRIVATE }
 
     private final HashMap<String, PrivacySetting> privacyStatusOfPersonalInformation;
 
-    private       String          biography;
     private final User            relatedUser;
-    private final ArrayList<Post> posts;
-    private final ArrayList<Post> taggedPosts;
-    private final ProfileList     followerList;
-    private final ProfileList     followingList;
+    private       String          biography;
+    private       ProfileList     followerList;
+    private       ProfileList     followingList;
+    private       ArrayList<Post> posts;
+    private       ArrayList<Post> taggedPosts;
     private       PrivacySetting  privacySetting;
+    private       boolean         alarmIsTriggered;
 
 
 
@@ -41,13 +46,14 @@ public class Profile
 
     public Profile(User relatedUser)
     {
-        this.relatedUser    = relatedUser;
-        this.biography      = "";
-        this.followerList   = new ProfileList();
-        this.followingList  = new ProfileList();
-        this.posts          = new ArrayList<>();
-        this.taggedPosts    = new ArrayList<>();
-        this.privacySetting = PrivacySetting.PRIVATE;
+        this.relatedUser      = relatedUser;
+        this.biography        = "";
+        this.followerList     = new ProfileList();
+        this.followingList    = new ProfileList();
+        this.posts            = new ArrayList<>();
+        this.taggedPosts      = new ArrayList<>();
+        this.privacySetting   = PrivacySetting.PRIVATE;
+        this.alarmIsTriggered = false;
 
         this.privacyStatusOfPersonalInformation = new HashMap<>();
         setPersonalInformationToPrivate();
@@ -69,6 +75,7 @@ public class Profile
     }
 
 
+    //when a new profile is created all personal information is set to private
     private void setPersonalInformationToPrivate()
     {
         this.privacyStatusOfPersonalInformation.put("firstname", PrivacySetting.PRIVATE);
@@ -77,6 +84,31 @@ public class Profile
         this.privacyStatusOfPersonalInformation.put("email",     PrivacySetting.PRIVATE);
     }
 
+
+    //checks if two profiles are following each other
+    //if they do, the profile of @followers is stored in @befriended
+    //                                                                                                                  !!!!!!! DESCRIPTION !!!!!!!
+    //private ArrayList<Profile> getBefriendedProfiles(ArrayList<Profile> following, ArrayList<Profile> followers)
+    //{
+    //    ArrayList<Profile> profilesImFollowing = this.getFollowingList().getProfiles();
+    //    ArrayList<Profile> befriended          = new ArrayList<>();
+//
+//
+    //    for (Profile pif: profilesImFollowing)
+    //    {
+    //        ArrayList<Profile> followedProfilesOfProfilesImFollowing = pif.getFollowingList().getProfiles();
+//
+    //        for (Profile fp: followedProfilesOfProfilesImFollowing)
+    //        {
+    //            if (pif == fp)      //!!! CONTAINS !!!
+    //            {
+    //                befriended.add(fp);
+    //            }
+    //        }
+    //    }
+//
+    //    return befriended;
+    //}
 
 
     // ============================= //
@@ -118,23 +150,78 @@ public class Profile
     }
 
 
+    public void setFollower(Profile follower)
+    {
+        this.followerList.addProfile(follower);
+    }
+    public void setFollowing(Profile followedProfile)
+    {
+        this.followingList.addProfile(followedProfile);
+    }
+
+
 
     // =========================== //
     // ===== ALARM FUNCTIONS ===== //
     // =========================== //
 
-    //creates a warning for all befriended persons you tagged in your posts, or that tagged you in their
-    //posts in case you get tested positive with Corona
+    //creates a warning for all and only befriended profiles you tagged in your posts, or that tagged you in
+    //their posts in case you get tested positive with Corona
+    //@befriended     contains all befriended profiles (profiles that you follow and they follow you back)
+    //@taggedProfiles stores all profiles that are tagged in your own posts and tagged in the same posts as you
     public void createAlarm()
     {
+        ArrayList<Profile> taggedProfiles = new ArrayList<>();
+        ArrayList<Post>    myPosts        = this.getPosts();
 
+
+        //loop through my own posts
+        for (Post post: myPosts)
+        {
+            //get all tagged profiles from those posts
+            for (Profile tagged: post.getTaggedProfiles())
+            {
+                //to avoid duplicate entries only taggedProfiles that are not already in the list are added
+                if (!taggedProfiles.contains(tagged))
+                {
+                    taggedProfiles.add(tagged);
+                }
+            }
+        }
+
+
+        //loop through posts you are tagged in and are not your own posts
+        for (Post taggedPost: this.getTaggedPosts())                                                //!!! also get author !!!
+        {
+            //get all tagged profiles from those posts
+            for (Profile tagged: taggedPost.getTaggedProfiles())
+            {
+                //avoid duplicate entries
+                if (!taggedProfiles.contains(tagged))
+                {
+                    taggedProfiles.add(tagged);
+                }
+            }
+        }
+
+
+        //befriended = getBefriendedProfiles(following, followers);
+
+        //only profiles that are in both of your profile-lists
     }
 
 
     //if a profile created an alarm and you are befriended with it, you will get a notification
-    public void alarmTriggered()
+    public void triggerAlarm()
     {
         System.out.println("ALARM");
+        this.setAlarmIsTriggered(true);
+    }
+
+    //replacement for: if you get the alarm and press a button with e.g. "okay"
+    public void resetAlarm()
+    {
+        this.setAlarmIsTriggered(false);
     }
 
 
@@ -276,7 +363,8 @@ public class Profile
 
     //creates a new post, tags the given profiles on it and "uploads" the post on your profile and on all profiles you tagged
     //if you want to tag profiles, they have to be passed in an ArrayList, if no tags are needed the override-method below can be used
-    public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay, ArrayList<Profile> taggedProfiles)
+    public void newPost(String imageDescription, String postDescription, String meetingPlace, int meetingYear, int meetingMonth, int meetingDay,
+                        ArrayList<Profile> taggedProfiles)
     {
         Post post = new Post(this, imageDescription, postDescription, meetingPlace, meetingYear, meetingMonth, meetingDay);
         post.setTaggedProfiles(taggedProfiles);
@@ -343,10 +431,19 @@ public class Profile
     {
         return this.posts;
     }
+    public void setPosts(ArrayList<Post> posts)
+    {
+        this.posts = posts;
+    }
+
 
     public ArrayList<Post> getTaggedPosts()
     {
         return this.taggedPosts;
+    }
+    public void setTaggedPosts(ArrayList<Post> taggedPosts)
+    {
+        this.taggedPosts = taggedPosts;
     }
 
 
@@ -354,9 +451,9 @@ public class Profile
     {
         return this.followerList;
     }
-    public void setFollower(Profile follower)
+    public void setFollowerList(ProfileList followerList)
     {
-        this.followerList.addProfile(follower);
+        this.followerList = followerList;
     }
 
 
@@ -364,9 +461,9 @@ public class Profile
     {
         return this.followingList;
     }
-    public void setFollowing(Profile followedProfile)
+    public void setFollowingList(ProfileList followingList)
     {
-        this.followingList.addProfile(followedProfile);
+        this.followingList = followingList;
     }
 
 
@@ -385,6 +482,14 @@ public class Profile
         return this.privacyStatusOfPersonalInformation;
     }
 
+    public boolean getAlarmIsTriggered()
+    {
+        return this.alarmIsTriggered;
+    }
+    public void setAlarmIsTriggered(boolean alarmIsTriggered)
+    {
+        this.alarmIsTriggered = alarmIsTriggered;
+    }
 
 
     // =============================== //
