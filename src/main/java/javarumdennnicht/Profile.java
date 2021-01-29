@@ -167,18 +167,21 @@ public class Profile
 
     //creates a warning for all and only befriended profiles you tagged in your posts, or that tagged you in
     //their posts in case you get tested positive with Corona
-    //@befriended     contains all befriended profiles (profiles that you follow and they follow you back)
-    //@taggedProfiles stores all profiles that are tagged in your own posts and tagged in the same posts as you
+    //"befriended": profiles that you follow and they follow you back
+    //@taggedProfiles  stores all profiles that are tagged in your own posts and tagged in the same posts as you
     public void createAlarm()
     {
-        ArrayList<Profile> taggedProfiles = new ArrayList<>();
-        ArrayList<Post>    myPosts        = this.getPosts();
+        ArrayList<Profile> taggedProfiles   = new ArrayList<>();
+        ArrayList<Profile> followedProfiles = this.getFollowingList().getProfiles();
+        ArrayList<Profile> followers        = this.getFollowerList().getProfiles();
+        ArrayList<Post>    myPosts          = this.getPosts();
+        ArrayList<Post>    postsIAmTaggedIn = this.getTaggedPosts();
 
 
         //loop through my own posts
         for (Post post: myPosts)
         {
-            //get all tagged profiles from those posts
+            //get all tagged profiles from current post
             for (Profile tagged: post.getTaggedProfiles())
             {
                 //to avoid duplicate entries only taggedProfiles that are not already in the list are added
@@ -189,11 +192,10 @@ public class Profile
             }
         }
 
-
         //loop through posts you are tagged in and are not your own posts
-        for (Post taggedPost: this.getTaggedPosts())                                                //!!! also get author !!!
+        for (Post taggedPost: postsIAmTaggedIn)                                                           //!!! also get author !!!
         {
-            //get all tagged profiles from those posts
+            //get all tagged profiles from current post
             for (Profile tagged: taggedPost.getTaggedProfiles())
             {
                 //avoid duplicate entries
@@ -205,9 +207,31 @@ public class Profile
         }
 
 
-        //befriended = getBefriendedProfiles(following, followers);
+        //check which of the tagged profiles I am following and remove all tagged profiles I am not following
+        //after that taggedProfiles only contains @taggedProfiles that I am following
+        for (Profile tagged: taggedProfiles)
+        {
+            if (!followedProfiles.contains(tagged))
+            {
+                taggedProfiles.remove(tagged);
+            }
+        }
 
-        //only profiles that are in both of your profile-lists
+        //check which of the taggedProfiles I am following are following me back
+        //after that only befriended profiles are in @taggedProfiles
+        for (Profile tagged: taggedProfiles)
+        {
+            if (!followers.contains(tagged))
+            {
+                taggedProfiles.remove(tagged);
+            }
+        }
+
+        //trigger the alarm on all befriended profiles that are tagged
+        for (Profile befriended: taggedProfiles)
+        {
+            befriended.triggerAlarm();
+        }
     }
 
 
