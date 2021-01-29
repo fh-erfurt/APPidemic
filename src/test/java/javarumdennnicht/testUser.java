@@ -3,7 +3,7 @@ package javarumdennnicht;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 
 import static org.junit.Assert.*;
 
@@ -15,6 +15,7 @@ public class testUser {
 
 
     @Test
+    // testing a password change successful
     public void changing_a_password_successful(){
 
 
@@ -32,6 +33,7 @@ public class testUser {
     }
 
     @Test
+    // testing a password change unsuccessful because of a wrong old password
     public  void changing_a_password_but_the_old_password_is_wrong(){
 
         // Given
@@ -48,7 +50,8 @@ public class testUser {
     }
 
     @Test
-    public void changing_a_password_but_the_new_password_inputs_are_diffrent(){
+    //testing a password change unsuccessful because of two different inputs for the new password
+    public void changing_a_password_but_the_new_password_inputs_are_different(){
 
         // Given
 
@@ -65,6 +68,7 @@ public class testUser {
     }
 
     @Test
+    // testing a successful username change
     public void changing_username_successful(){
 
         // Given
@@ -83,6 +87,7 @@ public class testUser {
     }
 
     @Test
+    // testing an unsuccessful username change because of an already taken username
     public void changing_username_but_username_is_taken(){
 
         // Given
@@ -100,6 +105,7 @@ public class testUser {
     }
 
     @Test
+    // testing a successful email address change
     public void changing_email_successful(){
 
         // Given
@@ -109,7 +115,7 @@ public class testUser {
 
         // When
 
-        user.changeEMailAdress(allUser, "email@gmail.com");
+        user.changeEMailAddress(allUser, "email@gmail.com");
 
         // Then
 
@@ -117,6 +123,7 @@ public class testUser {
     }
 
     @Test
+    // testing a unsuccessful email address change because of an already taken email address
     public void changing_email_but_email_is_already_taken(){
 
         // Given
@@ -126,7 +133,7 @@ public class testUser {
 
         // When
 
-        user.changeEMailAdress(allUser, "ElricEdward@gmx.com");
+        user.changeEMailAddress(allUser, "ElricEdward@gmx.com");
 
         // Then
 

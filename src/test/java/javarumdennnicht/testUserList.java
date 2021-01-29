@@ -8,14 +8,16 @@ import java.time.LocalDate;
 
 
 public class testUserList {
-
+    // this is done to prevent unnecessary duplicate code
+    UserList allUser = new UserList();
 
     @Test
+    // this test checks the addUser method
     public void userlist_can_add_a_new_user(){
 
         // Given
 
-        UserList allUser = new UserList();
+
 
         // When
 
@@ -27,11 +29,11 @@ public class testUserList {
     }
 
     @Test
+    // this test checks the removeUser method
     public void userlist_can_remove_existing_user_by_username(){
 
         // Given
 
-        UserList allUser = new UserList();
         allUser.addUser("havoc17", "1234qwe", "havoc@gmail.com", "Hannes", "Volker", LocalDate.of(2004,12,23));
 
         // When
@@ -45,11 +47,11 @@ public class testUserList {
     }
 
     @Test
+    // this test checks that there will be no new entrance in the user list if the username already exists
     public void trying_to_add_an_existing_username_should_not_work(){
 
         // Given
 
-        UserList allUser = new UserList();
         allUser.addUser("havoc17", "1234qwe", "havoc@gmail.com", "Hannes", "Volker", LocalDate.of(2004,12,23));
 
         // When
@@ -63,11 +65,11 @@ public class testUserList {
     }
 
     @Test
+    // this test checks that there will be no new entrance in the user list if the email address already exists
     public void trying_to_add_an_existing_eMail_should_not_work(){
 
         // Given
 
-        UserList allUser = new UserList();
         allUser.addUser("havoc17", "1234qwe", "havoc@gmail.com", "Hannes", "Volker", LocalDate.of(2004,12,23));
 
         // When

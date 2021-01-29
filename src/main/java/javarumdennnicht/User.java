@@ -2,6 +2,7 @@ package javarumdennnicht;
 
 import java.time.LocalDate;
 
+//This class contains all information about a User. Such as the username or firstname and lastname
 
 public class User {
     private String username;
@@ -13,7 +14,6 @@ public class User {
     private final Profile relatedProfile;
 
     // Constructor
-
     public User(String username, String password, String eMail, String firstName, String lastName, LocalDate birthdate){
         this.username = username;
         this.password = password;
@@ -24,8 +24,9 @@ public class User {
         this.relatedProfile = new Profile(this);
     }
 
+    //
     // Setter and Getter
-
+    //
     public String getUsername() {
         return username;
     }
@@ -78,8 +79,11 @@ public class User {
         return relatedProfile;
     }
 
+    //
     // Other Functions
+    //
 
+    // this method changes the password of the user by first checking of having the password and then setting the new password by typing it in two times
     public void changePassword(String oldPassword,String password1, String password2) {
         if (oldPassword == this.password) {
             if (password1 == this.password) {
@@ -95,6 +99,7 @@ public class User {
         else System.out.println("The old password is incorrect");
     }
 
+    // this method changes the username of a profile by first checking if it already exists in the user list
     public void changeUsername(UserList userList, String username){
 
         if(!userList.checkUsernameExistance(username)){
@@ -104,7 +109,8 @@ public class User {
         else System.out.println("The username already exists");
     }
 
-    public void changeEMailAdress(UserList userList, String eMail){
+    // this method changes the email address of a profile by first checking if it already exists in the user list
+    public void changeEMailAddress(UserList userList, String eMail){
 
         if(!userList.checkEMailExistance(eMail)){
             this.eMail=eMail;
