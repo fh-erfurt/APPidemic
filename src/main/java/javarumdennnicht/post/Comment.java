@@ -1,4 +1,9 @@
-package javarumdennnicht;
+package javarumdennnicht.post;
+
+//import classes
+import javarumdennnicht.profile.Profile;
+
+
 
 public class Comment
 {

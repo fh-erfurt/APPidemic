@@ -1,4 +1,7 @@
-package javarumdennnicht;
+package javarumdennnicht.user;
+
+//import classes
+import javarumdennnicht.profile.Profile;
 
 import java.time.LocalDate;
 

@@ -1,4 +1,4 @@
-package javarumdennnicht;
+package javarumdennnicht.profile;
 
 
 //import ArrayList class

@@ -1,5 +1,8 @@
-package javarumdennnicht;
+package javarumdennnicht.profile;
 
+//import classes
+import javarumdennnicht.user.User;
+import javarumdennnicht.post.Post;
 
 //import ArrayList class
 import java.util.ArrayList;
@@ -26,11 +29,11 @@ public class Profile
     // ===== VARIABLES ===== //
     // ===================== //
 
-    enum PrivacySetting { PUBLIC, PRIVATE }
+    public enum PrivacySetting { PUBLIC, PRIVATE }
 
     private final HashMap<String, PrivacySetting> privacyStatusOfPersonalInformation;
 
-    private final User            relatedUser;
+    private final User relatedUser;
     private       String          biography;
     private       ProfileList     followerList;
     private       ProfileList     followingList;

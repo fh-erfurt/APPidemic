@@ -1,4 +1,7 @@
-package javarumdennnicht;
+package javarumdennnicht.post;
+
+//import classes
+import javarumdennnicht.profile.Profile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

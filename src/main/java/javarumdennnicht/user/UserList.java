@@ -1,4 +1,4 @@
-package javarumdennnicht;
+package javarumdennnicht.user;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
