@@ -37,37 +37,21 @@ public class ProfileList
             return null;
         }
 
-        return this.profiles.get(index);
+        return this.getProfiles().get(index);
     }
 
 
     //gets a profile and checks if it is already in the profiles-ArrayList
     public boolean isProfileAlreadyInList(Profile profile)
     {
-        for (Profile p: this.profiles)
-        {
-            if (p == profile)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return this.getProfiles().contains(profile);
     }
 
 
     //gets a profile and removes it from the profiles-ArrayList
     public void removeProfile(Profile profile)
     {
-        for (Profile p: this.profiles)
-        {
-            if (p == profile)
-            {
-                this.profiles.remove(p);
-                break;
-            }
-        }
-
+        this.getProfiles().remove(profile);
         setNumberOfProfiles();
     }
 
@@ -75,14 +59,14 @@ public class ProfileList
     //sets the current size of the profiles-ArrayList as the numberOfProfiles
     public void setNumberOfProfiles()
     {
-        this.numberOfProfiles = this.profiles.size();
+        this.numberOfProfiles = this.getProfiles().size();
     }
 
 
     //gets a profile and adds it to the profiles-ArrayList
     public void addProfile(Profile profile)
     {
-        this.profiles.add(profile);
+        this.getProfiles().add(profile);
         setNumberOfProfiles();
     }
 
@@ -109,13 +93,13 @@ public class ProfileList
     // ============================= //
     private boolean listHasNoElements()
     {
-        return this.profiles.size() == 0;
+        return this.getProfiles().size() == 0;
     }
 
 
     private boolean indexIsHigherThanListSize(int index)
     {
-        return index > this.profiles.size();
+        return index > this.getProfiles().size();
     }
 
 
