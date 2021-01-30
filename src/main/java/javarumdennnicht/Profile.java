@@ -154,88 +154,16 @@ public class Profile
         ArrayList<Post>    postsIAmTaggedIn = this.getTaggedPosts();
 
 
-        //loop through profiles own posts
-        for (Post post: myPosts)
-        {
-            //get all tagged profiles from current post
-            for (Profile tagged: post.getTaggedProfiles())
-            {
-                //to avoid duplicate entries only taggedProfiles that are not already in the list are added
-                if (!taggedProfiles.contains(tagged))
-                {
-                    taggedProfiles.add(tagged);
-                }
-            }
-        }
+        //loop through post of own profile
+        getTaggedProfilesFromOwnPosts(myPosts, taggedProfiles);
 
 
         //loop through posts you are tagged in and are not your own posts
-        for (Post taggedPost: postsIAmTaggedIn)                                                           //!!! also get author !!!
-        {
-            //get all tagged profiles from current post
-            for (Profile tagged: taggedPost.getTaggedProfiles())
-            {
-                //avoid duplicate entries
-                if (!taggedProfiles.contains(tagged))
-                {
-                    taggedProfiles.add(tagged);
-                }
-            }
-        }
+        getTaggedProfilesFromPostsImTaggedIn(postsIAmTaggedIn, taggedProfiles);
 
 
-        //set iterator for taggedProfiles so .remove() can be used properly
-        Iterator<Profile> i_profiles = taggedProfiles.iterator();
-
-        //check which of the tagged profiles I am following and remove all tagged profiles I am not following
-        //after that taggedProfiles only contains @taggedProfiles that I am following
-        while (i_profiles.hasNext())
-        {
-            //must be called here so profile.remove() can be used
-            Profile p = i_profiles.next();
-
-            //if my FollowingList does not contain the profile from the taggedProfiles it gets removed
-            if (!followedProfiles.contains(p))
-            {
-                i_profiles.remove();
-            }
-        }
-
-
-        //pass the iterator the new taggedProfiles-list
-        i_profiles = taggedProfiles.iterator();
-
-        //check which of the taggedProfiles I am following are following me back
-        //after that only befriended profiles are in @taggedProfiles
-        while (i_profiles.hasNext())
-        {
-            Profile p = i_profiles.next();
-
-            //if my FollowerList does not contain the profile from the taggedProfiles it gets removed
-            if (!followers.contains(p))
-            {
-                i_profiles.remove();
-            }
-        }
-
-
-        //for (Profile tagged: taggedProfiles)
-        //{
-        //    if (!followedProfiles.contains(tagged))
-        //    {
-        //        taggedProfiles.remove(tagged);
-        //    }
-        //}
-
-        //check which of the taggedProfiles I am following are following me back                                    //!!! DELETE !!!
-        //after that only befriended profiles are in @taggedProfiles
-        //for (Profile tagged: taggedProfiles)
-        //{
-        //    if (!followers.contains(tagged))
-        //    {
-        //        taggedProfiles.remove(tagged);
-        //    }
-        //}
+        //remove all profiles from @taggedProfiles that I am not befriended with
+        removeProfilesThatIAmNotBefriendedWith(followedProfiles, followers, taggedProfiles);
 
 
         //trigger the alarm on all befriended profiles that are tagged
@@ -247,7 +175,7 @@ public class Profile
 
 
     //if a profile created an alarm and you are befriended with it, you will get a notification
-    public void triggerAlarm()
+    private void triggerAlarm()
     {
         String username = this.getRelatedUser().getUsername();
 
@@ -259,6 +187,101 @@ public class Profile
     public void resetAlarm()
     {
         this.setAlarmIsTriggered(false);
+    }
+
+
+
+    // ====================================== //
+    // ===== HELPER FUNCTIONS FOR ALARM ===== //
+    // ====================================== //
+    private void getTaggedProfilesFromOwnPosts(ArrayList<Post> myPosts, ArrayList<Profile> taggedProfiles)
+    {
+        //loop through posts of own profile
+        for (Post post: myPosts)
+        {
+            //get all tagged profiles from current post
+            for (Profile tagged: post.getTaggedProfiles())
+            {
+                //to avoid duplicate entries only add taggedProfiles that are not already in the list
+                if (!taggedProfiles.contains(tagged))
+                {
+                    taggedProfiles.add(tagged);
+                }
+            }
+        }
+    }
+
+
+    private void getTaggedProfilesFromPostsImTaggedIn(ArrayList<Post> postsIAmTaggedIn, ArrayList<Profile> taggedProfiles)
+    {
+        for (Post taggedPost: postsIAmTaggedIn)
+        {
+            //get all tagged profiles from current post
+            for (Profile tagged: taggedPost.getTaggedProfiles())
+            {
+                //avoid duplicate entries
+                if (!taggedProfiles.contains(tagged))
+                {
+                    taggedProfiles.add(tagged);
+                }
+            }
+
+            //get author of the post you're tagged in
+            Profile author = taggedPost.getAuthor();
+
+            if (!taggedProfiles.contains(author))
+            {
+                taggedProfiles.add(author);
+            }
+        }
+    }
+
+
+    private void removeProfilesThatIAmNotBefriendedWith(ArrayList<Profile> followedProfiles, ArrayList<Profile> followers, ArrayList<Profile> taggedProfiles)
+    {
+        //set iterator for taggedProfiles so .remove() can be used properly
+        Iterator<Profile> i_profiles = taggedProfiles.iterator();
+
+        removeProfilesIAmNotFollowing(i_profiles, followedProfiles);
+
+        //pass the iterator the new taggedProfiles-list
+        i_profiles = taggedProfiles.iterator();
+
+        //check which of the taggedProfiles I am following are following me back
+        //after that only befriended profiles are in @taggedProfiles
+        removeProfilesIAreNotFollowingMe(i_profiles, followers);
+    }
+
+
+    private void removeProfilesIAmNotFollowing(Iterator<Profile> i_profiles, ArrayList<Profile> followedProfiles)
+    {
+        //check which of the tagged profiles I am following and remove all tagged profiles I am not following
+        while (i_profiles.hasNext())
+        {
+            //must be called here so profile.remove() can be used
+            Profile p = i_profiles.next();
+
+            //if my FollowingList does not contain the profile from the taggedProfiles it gets removed
+            if (!followedProfiles.contains(p))
+            {
+                i_profiles.remove();
+            }
+        }
+    }
+
+
+    private void removeProfilesIAreNotFollowingMe(Iterator<Profile> i_profiles, ArrayList<Profile> followers)
+    {
+        while (i_profiles.hasNext())
+        {
+            Profile p = i_profiles.next();
+
+            //if my FollowerList does not contain the profile from the taggedProfiles it gets removed
+            if (!followers.contains(p))
+            {
+                i_profiles.remove();
+            }
+        }
     }
 
 
