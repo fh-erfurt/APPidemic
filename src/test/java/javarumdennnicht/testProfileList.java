@@ -12,9 +12,9 @@ import static org.junit.Assert.*;
 public class testProfileList
 {
     //users used for all the tests, to prevent duplicated code they are declared here so every test can use them
-    private User user1 = new User("hansmueller",  "12345", "hansmueller@web.de",  "Hans",   "Müller", LocalDate.of(2000,1,10));
-    private User user2 = new User("tomvogt",      "98765", "tomvogt@web.de",      "Tom",    "Vogt",   LocalDate.of(1987,3, 4));
-    private User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt",   LocalDate.of(2001,6,13));
+    private final User user1 = new User("hansmueller",  "12345", "hansmueller@web.de",  "Hans",   "Müller", LocalDate.of(2000,1,10));
+    private final User user2 = new User("tomvogt",      "98765", "tomvogt@web.de",      "Tom",    "Vogt",   LocalDate.of(1987,3, 4));
+    private final User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt",   LocalDate.of(2001,6,13));
 
     @Test
     public void get_profile_should_return_null_if_the_index_is_out_of_bounds_or_the_list_is_empty()
