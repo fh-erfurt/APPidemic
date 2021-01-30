@@ -194,6 +194,7 @@ public class Profile
     // ====================================== //
     // ===== HELPER FUNCTIONS FOR ALARM ===== //
     // ====================================== //
+
     private void getTaggedProfilesFromOwnPosts(ArrayList<Post> myPosts, ArrayList<Profile> taggedProfiles)
     {
         //loop through posts of own profile
@@ -247,7 +248,6 @@ public class Profile
         //pass the iterator the new taggedProfiles-list
         i_profiles = taggedProfiles.iterator();
 
-        //check which of the taggedProfiles I am following are following me back
         //after that only befriended profiles are in @taggedProfiles
         removeProfilesIAreNotFollowingMe(i_profiles, followers);
     }
@@ -272,6 +272,7 @@ public class Profile
 
     private void removeProfilesIAreNotFollowingMe(Iterator<Profile> i_profiles, ArrayList<Profile> followers)
     {
+        //check which of the taggedProfiles I am following are following me back
         while (i_profiles.hasNext())
         {
             Profile p = i_profiles.next();
