@@ -1,5 +1,8 @@
-package javarumdennnicht;
+package javarumdennnicht.post;
 
+
+import javarumdennnicht.profile.Profile;
+import javarumdennnicht.user.User;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

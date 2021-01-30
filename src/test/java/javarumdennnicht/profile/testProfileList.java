@@ -1,6 +1,7 @@
-package javarumdennnicht;
+package javarumdennnicht.profile;
 
 
+import javarumdennnicht.user.User;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class testProfileList
     public void get_profile_should_return_null_if_the_index_is_out_of_bounds_or_the_list_is_empty()
     {
         // Given
-        Profile     profile1           = user1.getRelatedProfile();
+        Profile profile1           = user1.getRelatedProfile();
         Profile     profile2           = user2.getRelatedProfile();
         ProfileList filledFollowerList = new ProfileList();
         ProfileList emptyFollowerList  = new ProfileList();

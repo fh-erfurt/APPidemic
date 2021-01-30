@@ -1,6 +1,7 @@
-package javarumdennnicht;
+package javarumdennnicht.profile;
 
 
+import javarumdennnicht.user.User;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

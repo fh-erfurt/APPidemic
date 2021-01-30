@@ -1,4 +1,5 @@
-package javarumdennnicht;
+package javarumdennnicht.user;
+
 
 import org.junit.Test;
 

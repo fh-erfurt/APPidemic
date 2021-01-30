@@ -1,11 +1,13 @@
-package javarumdennnicht;
+package javarumdennnicht.post;
 
+
+import javarumdennnicht.profile.Profile;
+import javarumdennnicht.user.User;
 import org.junit.Test;
 
 import java.time.LocalDate;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
