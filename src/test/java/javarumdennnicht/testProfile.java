@@ -147,9 +147,9 @@ public class testProfile
 
 
         // GIVEN
-        Profile profilePost     = user1.getRelatedProfile();
-        Profile taggedProfile1  = user2.getRelatedProfile();    //following profilePost
-        Profile taggedProfile2  = user3.getRelatedProfile();    //following profilePost
+        Profile profilePost     = user1.getRelatedProfile();    //hansmueller
+        Profile taggedProfile1  = user2.getRelatedProfile();    //tomvogt
+        Profile taggedProfile2  = user3.getRelatedProfile();    //kalterdieter
 
         //profiles have to follow each other in order for the alarm to trigger on their profiles
         taggedProfile1.follow(profilePost);
@@ -187,14 +187,16 @@ public class testProfile
 
 
         // GIVEN
-        Profile profilePost     = user1.getRelatedProfile();
-        Profile taggedProfile1  = user2.getRelatedProfile();
-        Profile taggedProfile2  = user3.getRelatedProfile();
-        Profile taggedProfile3  = user4.getRelatedProfile();
+        Profile profilePost     = user1.getRelatedProfile();    //hansmueller
+        Profile taggedProfile1  = user2.getRelatedProfile();    //tomvogt
+        Profile taggedProfile2  = user3.getRelatedProfile();    //kalterdieter
+        Profile taggedProfile3  = user4.getRelatedProfile();    //heinzlayla
 
         //profiles have to follow each other in order for the alarm to trigger on their profiles
+        profilePost.   follow(taggedProfile2);
         taggedProfile1.follow(taggedProfile2);
         taggedProfile3.follow(taggedProfile2);
+        taggedProfile2.follow(profilePost);
         taggedProfile2.follow(taggedProfile1);
         taggedProfile2.follow(taggedProfile3);
 
@@ -210,8 +212,102 @@ public class testProfile
 
         // THEN
         assertEquals("The taggedProfile should not have duplicate profiles in it.",
-                     "tomvogt: ALARM" + newLine + "heinzlayla: ALARM" + newLine,
+                     "tomvogt: ALARM" + newLine + "heinzlayla: ALARM" + newLine +  "hansmueller: ALARM" + newLine,
                      outContent.toString());
+        assertEquals("Befriended authors of a post you're tagged in should receive an alarm as well.",
+                     "tomvogt: ALARM" + newLine + "heinzlayla: ALARM" + newLine +  "hansmueller: ALARM" + newLine,
+                     outContent.toString());
+    }
+
+
+    @Test
+    public void only_befriended_profiles_should_receive_an_alarm()
+    {
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        String newLine = System.getProperty("line.separator");
+
+
+        // GIVEN
+        Profile profileAlarm       = user1.getRelatedProfile();    //hansmueller
+        Profile befriendedProfile1 = user2.getRelatedProfile();    //tomvogt
+        Profile befriendedProfile2 = user3.getRelatedProfile();    //kalterdieter
+        Profile unfollowingProfile = user4.getRelatedProfile();    //heinzlayla
+
+        //profileAlarm, befriendedProfile1 & befriendedProfile2 are following each other
+        //unfollowingProfile is not following back profileAlarm
+        befriendedProfile1.follow(profileAlarm);
+        befriendedProfile2.follow(profileAlarm);
+        profileAlarm.follow(befriendedProfile1);
+        profileAlarm.follow(befriendedProfile2);
+        profileAlarm.follow(unfollowingProfile);
+
+        //tag all 3 profiles in posts, but unfollowingProfile and profileAlarm are not
+        //befriended, therefore unfollowingProfile should not get an alarm from profileAlarm
+        ArrayList<Profile> taggedProfiles1 = new ArrayList<>();
+        taggedProfiles1.add(befriendedProfile1);
+        taggedProfiles1.add(befriendedProfile2);
+        taggedProfiles1.add(unfollowingProfile);
+
+        ArrayList<Profile> taggedProfiles2 = new ArrayList<>();
+        taggedProfiles2.add(befriendedProfile2);
+        taggedProfiles2.add(unfollowingProfile);
+
+        ArrayList<Profile> taggedProfiles3 = new ArrayList<>();
+        taggedProfiles3.add(befriendedProfile1);
+
+        //create posts with tagged users
+        profileAlarm.newPost("Bild 3TaggedUsers", "3TaggedUsers-Post", "3Tags", 2021, 1, 10, taggedProfiles1);
+        profileAlarm.newPost("Bild 2TaggedUsers", "2TaggedUsers-Post", "2Tags", 2021, 1, 12, taggedProfiles2);
+        profileAlarm.newPost("Bild 1TaggedUsers", "1TaggedUsers-Post", "1Tag",  2021, 1, 15, taggedProfiles3);
+
+        // WHEN
+        profileAlarm.createAlarm();
+
+        // THEN
+        assertEquals("Only befriended profiles should receive an alarm form each other.",
+                "tomvogt: ALARM" + newLine + "kalterdieter: ALARM" + newLine,
+                outContent.toString());
+    }
+
+
+    @Test
+    public void only_befriended_and_tagged_profiles_should_receive_an_alarm()
+    {
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        String newLine = System.getProperty("line.separator");
+
+
+        // GIVEN
+        Profile profileAlarm     = user1.getRelatedProfile();    //hansmueller
+        Profile taggedProfile1   = user2.getRelatedProfile();    //tomvogt
+        Profile taggedProfile2   = user3.getRelatedProfile();    //kalterdieter
+        Profile notTaggedProfile = user4.getRelatedProfile();    //heinzlayla
+
+        //all profiles are befriended
+        taggedProfile1.  follow(profileAlarm);
+        taggedProfile2.  follow(profileAlarm);
+        notTaggedProfile.follow(profileAlarm);
+        profileAlarm.follow(taggedProfile1);
+        profileAlarm.follow(taggedProfile2);
+        profileAlarm.follow(notTaggedProfile);
+
+        //only tag taggedProfile1 & taggedProfile2 in the post, so notTaggedProfile should receive no alarm
+        ArrayList<Profile> taggedProfiles1 = new ArrayList<>();
+        taggedProfiles1.add(taggedProfile1);
+        taggedProfiles1.add(taggedProfile2);
+
+        //create post with tagged users
+        profileAlarm.newPost("Bild 2TaggedUsers", "2TaggedUsers-Post", "2Tags", 2021, 1, 10, taggedProfiles1);
+
+        // WHEN
+        profileAlarm.createAlarm();
+
+        // THEN
+        assertEquals("Only befriended profiles that are tagged should receive an alarm.",
+                "tomvogt: ALARM" + newLine + "kalterdieter: ALARM" + newLine,
+                outContent.toString());
     }
 
 
@@ -281,13 +377,12 @@ public class testProfile
         System.setOut(new PrintStream(outContent));
         String newLine = System.getProperty("line.separator");
 
-
         Profile.PrivacySetting ps_private = Profile.PrivacySetting.PRIVATE;
         Profile.PrivacySetting ps_public  = Profile.PrivacySetting.PUBLIC;
 
         // GIVEN
-        Profile profilePublic      = user1.getRelatedProfile();
-        Profile profileNotSoPublic = user2.getRelatedProfile();
+        Profile profilePublic      = user1.getRelatedProfile();    //hansmueller
+        Profile profileNotSoPublic = user2.getRelatedProfile();    //tomvogt
 
         profilePublic.changePrivacyStatusOfPersonalInformation     (ps_public,  ps_public, ps_public,  ps_public);
         profileNotSoPublic.changePrivacyStatusOfPersonalInformation(ps_private, ps_public, ps_private, ps_private);
