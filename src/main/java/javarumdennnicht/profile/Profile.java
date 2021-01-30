@@ -19,9 +19,9 @@ import java.util.Iterator;
 * This class contains the non-user relevant information. It is the social face of the person that made the account.
 * You can decide which personal information is shown publicly and which is not, except your username.
 * It is possible to follow/unfollow other people and create posts with or without tagged profiles.
-* Most importantly you can create an alarm in case you get get tested positive with Covid-19. This will notify all persons
+* Most importantly you can create an alarm in case you get tested positive with Covid-19. This will notify all persons
 * you tagged in your post and people that tagged you in their post. This only works for profiles that you are befriended
-* (you follow them and they follow you) to protect abuse of this feature.
+* with (you follow them and they follow you) to protect abuse of this feature.
 * */
 public class Profile
 {
