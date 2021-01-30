@@ -1,9 +1,11 @@
 package javarumdennnicht.profile;
 
 
-import javarumdennnicht.user.User;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
+//import own classes
+import javarumdennnicht.user.User;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -176,6 +178,10 @@ public class testProfile
         assertEquals("The taggedProfile should not have duplicate profiles in it.",
                      "tomvogt: ALARM" + newLine + "kalterdieter: ALARM" + newLine,
                      outContent.toString());
+
+
+        //Reset System.out to print in console again:
+        //System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     }
 
 
@@ -402,9 +408,6 @@ public class testProfile
                      "User: tomvogt"              + newLine +
                      "Last Name: Vogt"            + newLine,
                      outContent.toString());
-
-        //Reset System.out to print in console again:
-        //System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     }
 
 

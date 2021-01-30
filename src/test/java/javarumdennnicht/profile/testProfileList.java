@@ -1,12 +1,13 @@
 package javarumdennnicht.profile;
 
 
-import javarumdennnicht.user.User;
 import org.junit.Test;
+import static org.junit.Assert.*;
+
+//import own classes
+import javarumdennnicht.user.User;
 
 import java.time.LocalDate;
-
-import static org.junit.Assert.*;
 
 
 
@@ -17,11 +18,12 @@ public class testProfileList
     private final User user2 = new User("tomvogt",      "98765", "tomvogt@web.de",      "Tom",    "Vogt",   LocalDate.of(1987,3, 4));
     private final User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt",   LocalDate.of(2001,6,13));
 
+
     @Test
     public void get_profile_should_return_null_if_the_index_is_out_of_bounds_or_the_list_is_empty()
     {
         // Given
-        Profile profile1           = user1.getRelatedProfile();
+        Profile     profile1           = user1.getRelatedProfile();
         Profile     profile2           = user2.getRelatedProfile();
         ProfileList filledFollowerList = new ProfileList();
         ProfileList emptyFollowerList  = new ProfileList();
@@ -53,6 +55,7 @@ public class testProfileList
         // Then
         assertEquals("FollowerNumber should increase by 1 after a profile is added to it.", 2, followerList.getNumberOfProfiles());
     }
+
 
 
     @Test
@@ -93,6 +96,7 @@ public class testProfileList
         assertEquals("Removing a profile should delete all empty entries.", profile1, followerList.getProfile(0));
         assertEquals("Removing a profile should delete all empty entries.", profile3, followerList.getProfile(1));
     }
+
 
 
     @Test

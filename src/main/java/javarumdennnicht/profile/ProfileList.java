@@ -6,16 +6,24 @@ import java.util.ArrayList;
 
 
 
+//CLASS PROFILE-LIST
+//This class is a basically an extension of an ArrayList, but we decided making an own class would make the code easier to read
+//It also makes accessing items in the list easier through it custom methods (e.g. ".getProfile(index)" instead of ".getProfiles.get(index)")
 public class ProfileList
 {
+    // ===================== //
+    // ===== VARIABLES ===== //
+    // ===================== //
+
     private       int                numberOfProfiles;
     private final ArrayList<Profile> profiles;
 
 
 
     // ======================= //
-    // ===== Constructor ===== //
+    // ===== CONSTRUCTOR ===== //
     // ======================= //
+
     public ProfileList()
     {
         this.profiles = new ArrayList<>();
@@ -23,9 +31,9 @@ public class ProfileList
 
 
 
-    // =============================== //
-    // ===== Functions / Methods ===== //
-    // =============================== //
+    // ============================= //
+    // ===== GENERAL FUNCTIONS ===== //
+    // ============================= //
 
     //gets an index and returns the profile on that index in the profiles-ArrayList
     //if the ArrayList has no elements or the index is higher than the elements in the array the function returns 'null'
@@ -73,8 +81,9 @@ public class ProfileList
 
 
     // =========================== //
-    // ===== Getter & Setter ===== //
+    // ===== GETTER & SETTER ===== //
     // =========================== //
+
     public int getNumberOfProfiles()
     {
         return this.numberOfProfiles;
@@ -88,9 +97,10 @@ public class ProfileList
 
 
 
-    // ============================= //
-    // ===== Extracted Methods ===== //
-    // ============================= //
+    // =============================== //
+    // ===== EXTRACTED FUNCTIONS ===== //
+    // =============================== //
+
     private boolean listHasNoElements()
     {
         return this.getProfiles().size() == 0;

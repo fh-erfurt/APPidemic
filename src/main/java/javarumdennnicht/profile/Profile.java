@@ -1,6 +1,7 @@
 package javarumdennnicht.profile;
 
-//import classes
+
+//import own classes
 import javarumdennnicht.user.User;
 import javarumdennnicht.post.Post;
 
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.time.format.DateTimeFormatter;
 //import iterator for for-each loops
 import java.util.Iterator;
+
 
 
 /*
@@ -33,7 +35,7 @@ public class Profile
 
     private final HashMap<String, PrivacySetting> privacyStatusOfPersonalInformation;
 
-    private final User relatedUser;
+    private final User            relatedUser;
     private       String          biography;
     private       ProfileList     followerList;
     private       ProfileList     followingList;
@@ -375,7 +377,7 @@ public class Profile
                         break;
 
                     case "email":
-                        System.out.println("E-Mail: " + user.getMail());
+                        System.out.println("E-Mail: " + user.getEMail());
                         break;
 
                     default:
@@ -556,6 +558,7 @@ public class Profile
     }
 
 
+
     // =============================== //
     // ===== EXTRACTED FUNCTIONS ===== //
     // =============================== //
@@ -624,5 +627,4 @@ public class Profile
     {
         return this.getPrivacyStatusOfPersonalInformation().get(attribute) == PrivacySetting.PUBLIC;
     }
-
 }

@@ -1,27 +1,41 @@
 package javarumdennnicht.post;
 
-//import classes
+
+//import own classes
 import javarumdennnicht.profile.Profile;
 
 
 
 public class Comment
 {
+    // ===================== //
+    // ===== VARIABLES ===== //
+    // ===================== //
 
-    private String commentText;
+    private String  commentText;
     private Profile commenter;
 
-    // Constructor
+
+
+    // ======================= //
+    // ===== CONSTRUCTOR ===== //
+    // ======================= //
+
     public Comment(Profile commenter, String text)
     {
-        this.commenter = commenter;
+        this.commenter   = commenter;
         this.commentText = text;
     }
 
-    // Setter und Getter
+
+
+    // =========================== //
+    // ===== GETTER & SETTER ===== //
+    // =========================== //
+
     public String getText()
     {
-        return commentText;
+        return this.commentText;
     }
     public void setText(String text)
     {
@@ -30,7 +44,7 @@ public class Comment
 
     public Profile getCommenter()
     {
-        return commenter;
+        return this.commenter;
     }
     public void setCommenter(Profile commenter)
     {
