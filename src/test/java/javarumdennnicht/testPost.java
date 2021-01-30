@@ -12,9 +12,9 @@ import java.io.PrintStream;
 public class testPost
 {
 
-    User user1 = new User("hansmueller", "12345", "hansmueller@web.de", "Hans", "Müller", LocalDate.of(2000,1,10));
-    User user2 = new User("tomvogt", "98765", "tomvogt@web.de", "Tom", "Vogt", LocalDate.of(1987,3,4));
-    User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt", LocalDate.of(2001,6,13));
+   private final User user1 = new User("hansmueller", "12345", "hansmueller@web.de", "Hans", "Müller", LocalDate.of(2000,1,10));
+   private final User user2 = new User("tomvogt", "98765", "tomvogt@web.de", "Tom", "Vogt", LocalDate.of(1987,3,4));
+   private final User user3 = new User("kalterdieter", "45454", "kalterdieter@web.de", "Dieter", "Kalt", LocalDate.of(2001,6,13));
 
     // tests the formatter of the date, because dd_mm_yyyy is just way better
     @Test
@@ -167,6 +167,7 @@ public class testPost
         // Then
         assertEquals("The like variable, which is the size of the likedByArray, should show a 2 for the two profiles in the likedByArray: ", 2, post.getLikes());
     }
+
     // tests if the removeLike function works as intended (removing the unliking profile from the ArrayList and lowering the like amount)
     @Test
     public void liking_a_post_and_then_unliking_it_again_should_remove_the_unliking_profile_from_the_likedBy_ArrayList_and_lower_the_likes_number_again()
@@ -186,6 +187,34 @@ public class testPost
         // Then
         assertEquals("The like variable, which is the size of the likedByArray, should show a 1, because there is only one profile left liking the post: ", 1, post.getLikes());
     }
+
+    // tests if the addLike prevents you from liking multiple times with the same profile (like pressing the like button again after liking removes the like, like on youtube)
+    @Test
+    public void trying_to_like_a_post_more_than_once_should_remove_the_like_by_the_profile()
+    {
+        // Given
+        Profile profile1 = user1.getRelatedProfile();
+        Profile profile2 = user2.getRelatedProfile();
+        Profile profile3 = user3.getRelatedProfile();
+        Post post = new Post(profile1, "3 Menschen, in Bar, trinken Alkohol", "Schön in kleiner runde gehoben ;-)","Arche Noah, Erfurt", 2018, 8, 6);
+
+        // When
+        post.submitPost();
+        // profile2 likes the post
+        post.addLike(profile2);
+        // profile2 does it again and it should remove the like
+        post.addLike(profile2);
+        // profile2 does it again and it should add the like again
+        post.addLike(profile2);
+        // profile3 adds its like
+        post.addLike(profile3);
+        // profile3 adds it again, which should remove the like
+        post.addLike(profile3);
+
+        // Then
+        assertEquals("The like variable, which is the size of the likedByArray, should show a 1 for the one profile that is left in the likedByArray: ", 1, post.getLikes());
+    }
+
     // tests if the addComment function enables commenting under posts
     @Test
     public void creating_a_comment_will_add_the_comment_with_its_given_attributes_to_the_comments_ArrayList_of_the_post()

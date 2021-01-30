@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 
-public final class Post
+public class Post
 {
     private Profile author;
     private ArrayList<Profile> taggedProfiles;
@@ -49,8 +49,15 @@ public final class Post
     // the like count rises and the liking profile is added to the likedBy ArrayList of the post
     public void addLike(Profile liker)
     {
-        likedByProfiles.add(liker);
-        this.setLikes(likedByProfiles.size());
+        // liking a profile again will undo the like
+        if(likedByProfiles.contains(liker)){
+            likedByProfiles.remove(liker);
+        }
+        else{
+            likedByProfiles.add(liker);
+            this.setLikes(likedByProfiles.size());
+        }
+
     }
     public void removeLike(Profile removedLiker)
     {
@@ -62,7 +69,15 @@ public final class Post
     // after using the submitPost method the post is posted on the tagged profiles
     public void addTaggedProfile(Profile taggedProfile)
     {
-        taggedProfiles.add(taggedProfile);
+        if(taggedProfiles.contains(taggedProfile))
+        {
+            System.out.println("Profile has already been tagged.");
+        }
+        else
+        {
+            taggedProfiles.add(taggedProfile);
+        }
+
     }
     // removes a tagged profile
     public void removeTaggedProfile(Profile untaggedProfile)
