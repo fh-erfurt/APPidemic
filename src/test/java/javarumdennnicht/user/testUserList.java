@@ -35,9 +35,10 @@ public class testUserList
     {
         // Given
         allUser.addUser("havoc17", "1234qwe", "havoc@gmail.com", "Hannes", "Volker", LocalDate.of(2004,12,23));
+        User user = allUser.getUserList().get(0);
 
         // When
-        allUser.removeUser("havoc17");
+        allUser.removeUser(user);
 
         // Then
         assertEquals("The user hasn't been removed", 0, allUser.getUserList().size());

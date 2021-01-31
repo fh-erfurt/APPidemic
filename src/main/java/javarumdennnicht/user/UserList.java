@@ -44,22 +44,9 @@ public class UserList
 
 
     // this method removes an existing user from the user list
-    public void removeUser(String username)
+    public void removeUser(User user)
     {
-        if (this.getUserList().size() > 0)
-        {
-            if (checkUsernameExistence(username))
-            {
-                for (User u: this.getUserList())
-                {
-                    if (u.getUsername().equals(username))
-                    {
-                        this.getUserList().remove(u);
-                        break;
-                    }
-                }
-            }
-        }
+        this.userList.remove(user);
     }
 
 
