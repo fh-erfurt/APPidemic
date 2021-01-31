@@ -8,7 +8,7 @@ Im Rahmen des Moduls Java 1 haben wir, <br>
 **[Henning Venhorst](https://github.com/HenningCV)** <br>
 die Gruppe „javarumdennnicht“ gegründet und zusammen „APPidemic“ ins Leben gerufen. <br>
 Was das ist und wie es aussieht werden Sie im Folgenden kennenlernen.
-
+<br><br>
 
 
 ## Charakter
