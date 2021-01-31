@@ -174,15 +174,18 @@ public class Profile
         //trigger the alarm on all befriended profiles that are tagged
         for (Profile befriended: taggedProfiles)
         {
-            befriended.triggerAlarm();
+            befriended.triggerAlarm(this);
         }
     }
 
 
     //if a profile created an alarm and you are befriended with it, you will get a notification
-    private void triggerAlarm()
+    private void triggerAlarm(Profile alarmCreator)
     {
         String username = this.getRelatedUser().getUsername();
+
+        //display the username that created the alarm so you know where it comes from
+        System.out.println("ALARM FROM " + alarmCreator.getRelatedUser().getUsername());
 
         System.out.println(username + ": ALARM");
         this.setAlarmIsTriggered(true);

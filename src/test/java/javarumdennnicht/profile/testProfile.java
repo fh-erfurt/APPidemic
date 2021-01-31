@@ -139,13 +139,51 @@ public class testProfile
     // ================================================== TEST createAlarm() ================================================== //
     // ======================================================================================================================== //
     @Test
-    public void creating_an_alarm_should_have_no_duplicate_profiles_in_the_taggedProfile_list()
+    public void creating_an_alarm_should_show_the_notified_profile_who_triggered_the_alarm()
     {
         //preparation for System.out.println-check
         //compares what is printed out from "System.out.println" with an expected string
         final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
         //newLine contains the line-separator that "println()" creates after a line is printed
+        String newLine = System.getProperty("line.separator");
+
+
+        // GIVEN
+        Profile profileCreateAlarm = user1.getRelatedProfile();    //hansmueller
+        Profile profileWarned      = user2.getRelatedProfile();    //tomvogt
+
+        //profiles have to follow each other in order for the alarm to trigger on their profiles
+        profileCreateAlarm.follow(profileWarned);
+        profileWarned.follow(profileCreateAlarm);
+
+        //tag profileWarned in a post
+        ArrayList<Profile> taggedProfiles = new ArrayList<>();
+        taggedProfiles.add(profileWarned);
+
+        //make 2 posts in which taggedProfile2 is tagged twice
+        profileCreateAlarm.newPost("Bild 2TaggedUsersThatFollow", "2TaggedUsers-Post", "2Tags", 2021, 1, 10, taggedProfiles);
+
+        // WHEN
+        profileCreateAlarm.createAlarm();
+
+        // THEN
+        assertEquals("The taggedProfile should not have duplicate profiles in it.",
+                     "ALARM FROM hansmueller" + newLine + "tomvogt: ALARM" + newLine,
+                     outContent.toString());
+
+
+        //Reset System.out to print in console again:
+        //System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
+    }
+
+
+
+    @Test
+    public void creating_an_alarm_should_have_no_duplicate_profiles_in_the_taggedProfile_list()
+    {
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
         String newLine = System.getProperty("line.separator");
 
 
@@ -176,12 +214,9 @@ public class testProfile
 
         // THEN
         assertEquals("The taggedProfile should not have duplicate profiles in it.",
-                     "tomvogt: ALARM" + newLine + "kalterdieter: ALARM" + newLine,
+                     "ALARM FROM hansmueller" + newLine + "tomvogt: ALARM" + newLine +
+                     "ALARM FROM hansmueller" + newLine + "kalterdieter: ALARM" + newLine,
                      outContent.toString());
-
-
-        //Reset System.out to print in console again:
-        //System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out)));
     }
 
 
@@ -218,11 +253,10 @@ public class testProfile
         taggedProfile2.createAlarm();
 
         // THEN
-        assertEquals("The taggedProfile should not have duplicate profiles in it.",
-                     "tomvogt: ALARM" + newLine + "heinzlayla: ALARM" + newLine +  "hansmueller: ALARM" + newLine,
-                     outContent.toString());
         assertEquals("Befriended authors of a post you're tagged in should receive an alarm as well.",
-                     "tomvogt: ALARM" + newLine + "heinzlayla: ALARM" + newLine +  "hansmueller: ALARM" + newLine,
+                     "ALARM FROM kalterdieter" + newLine + "tomvogt: ALARM"     + newLine +
+                     "ALARM FROM kalterdieter" + newLine + "heinzlayla: ALARM"  + newLine +
+                     "ALARM FROM kalterdieter" + newLine + "hansmueller: ALARM" + newLine,
                      outContent.toString());
     }
 
@@ -273,8 +307,9 @@ public class testProfile
 
         // THEN
         assertEquals("Only befriended profiles should receive an alarm form each other.",
-                "tomvogt: ALARM" + newLine + "kalterdieter: ALARM" + newLine,
-                outContent.toString());
+                     "ALARM FROM hansmueller" + newLine + "tomvogt: ALARM" + newLine +
+                     "ALARM FROM hansmueller" + newLine + "kalterdieter: ALARM" + newLine,
+                     outContent.toString());
     }
 
 
@@ -313,8 +348,9 @@ public class testProfile
 
         // THEN
         assertEquals("Only befriended profiles that are tagged should receive an alarm.",
-                "tomvogt: ALARM" + newLine + "kalterdieter: ALARM" + newLine,
-                outContent.toString());
+                     "ALARM FROM hansmueller" + newLine + "tomvogt: ALARM"      + newLine +
+                     "ALARM FROM hansmueller" + newLine + "kalterdieter: ALARM" + newLine,
+                     outContent.toString());
     }
 
 
