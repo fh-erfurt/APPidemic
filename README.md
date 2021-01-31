@@ -75,10 +75,10 @@ Sie dient hauptsächlich der Übersichtlichkeit, da dies auch mittels ArrayListe
 **<summary>Package Post</summary>**
 
 _**Post**_ <br>
-Die Posts bringen Leben in eine social media Plattform.
-Ein Post enthält den bzw. die Autor:in, die markierten Personen, eine Postbeschreibung sowie Zeitpunkt und Ort.
-Das Bild an sich wird hier durch eine Bildbeschreibung realisiert, da keine Datenbankanbindung vorhanden ist und somit keine Bilder gespeichert werden.
-Der gesamte Post wird erst vervollständigt, wenn er mittels zugehöriger Methode submitted wird.
+Die Posts bringen Leben in eine social media Plattform. <br>
+Ein Post enthält den bzw. die Autor:in, die markierten Personen, eine Postbeschreibung sowie Zeitpunkt und Ort. <br>
+Das Bild an sich wird hier durch eine Bildbeschreibung realisiert, da keine Datenbankanbindung vorhanden ist und somit keine Bilder gespeichert werden. <br>
+Der gesamte Post wird erst vervollständigt, wenn er mittels zugehöriger Methode submitted wird. <br>
 Weiterhin können bei einem Post auch die Likes und die Liked By Liste, sowie die Kommentare eingesehen werden.
 <br><br>
 
