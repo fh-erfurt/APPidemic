@@ -105,6 +105,6 @@ allerdings wurde dies dank der mehreren Elemente innerhalb des Comments ausgelag
 ## Ausführung
 
 Bei APPidemic handelt es sich noch nicht um eine vollständige App, sondern nur um deren innere Struktur.
-Seine Blüte wird es erst im Modul Java 2 erreichen.
+Seine Blüte wird es erst im Modul Java 2 erreichen. <br>
 Beim Benutzen und Testen des jetzigen Standes muss allerdings beachtet werden,
 dass ein Java Development Kit zur Ausführung vorhanden sein muss.
