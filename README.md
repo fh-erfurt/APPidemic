@@ -13,15 +13,16 @@ Was das ist und wie es aussieht werden Sie im Folgenden kennenlernen.
 
 ## Charakter
 
-APPidemic ist nicht einfach nur irgendeine weitere social media Plattform. <br>
+APPidemic ist nicht einfach nur irgendeine weitere social media Plattform.
 Der Name lässt vielleicht erahnen, dass es sich um eine Art Mischform aus beispielsweise Instagram und der Corona-Warnapp handelt. <br>
-Wie auf Instagram kann man sich ein Profil erstellen, Bilder posten, anderen Leuten folgen und deren eigene Posts liken und kommentieren. <br>
-Zusätzlich kann man, wenn zum Beispiel ein gepostetes Bild bei einem gemeinsamen Treffen entstanden ist, die Mitwirkenden markieren. <br>
+Wie auf Instagram kann man sich ein Profil erstellen, Bilder posten, anderen Leuten folgen und deren eigene Posts liken und kommentieren.
+Zusätzlich kann man, wenn zum Beispiel ein gepostetes Bild bei einem gemeinsamen Treffen entstanden ist, die Mitwirkenden markieren.
 Posts, in denen man markiert wird, landen ebenfalls auf dem eigenen Profil, allerdings in einer anderen Liste als die selbst geposteten Bilder. <br>
-Mithilfe der Markierungen wird auch das Warnfeature realisiert. <br>
-Falls man nämlich positiv auf Covid-19 getestet werden sollte, kann man einen Alarm auslösen, der markierte Personen über die Infektion informiert, <br>
-sodass sie sich so früh wie möglich in Quarantäne begeben können. <br>
-Dies funktioniert nur bei Mutuals, also Personen, denen man folgt, welche ebenfalls zurückfolgen, um Spam zu verhindern.<br><br>
+Mithilfe der Markierungen wird auch das Warnfeature realisiert.
+Falls man nämlich positiv auf Covid-19 getestet werden sollte, kann man einen Alarm auslösen, der markierte Personen über die Infektion informiert,
+sodass sie sich so früh wie möglich in Quarantäne begeben können.
+Dies funktioniert nur bei Mutuals, also Personen, denen man folgt, welche ebenfalls zurückfolgen, um Spam zu verhindern.
+<br><br>
 
 
 
