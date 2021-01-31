@@ -13,14 +13,14 @@ Was das ist und wie es aussieht werden Sie im Folgenden kennenlernen.
 
 ## Charakter
 
-APPidemic ist nicht einfach nur irgendeine weitere social media Plattform.
-Der Name lässt vielleicht erahnen, dass es sich um eine Art Mischform aus beispielsweise Instagram und der Corona-Warnapp handelt.
-Wie auf Instagram kann man sich ein Profil erstellen, Bilder posten, anderen Leuten folgen und deren eigene Posts liken und kommentieren.
-Zusätzlich kann man, wenn zum Beispiel ein gepostetes Bild bei einem gemeinsamen Treffen entstanden ist, die Mitwirkenden markieren.
-Posts, in denen man markiert wird, landen ebenfalls auf dem eigenen Profil, allerdings in einer anderen Liste als die selbst geposteten Bilder.
-Mithilfe der Markierungen wird auch das Warnfeature realisiert.
-Falls man nämlich positiv auf Covid-19 getestet werden sollte, kann man einen Alarm auslösen, der markierte Personen über die Infektion informiert,
-sodass sie sich so früh wie möglich in Quarantäne begeben können.
+APPidemic ist nicht einfach nur irgendeine weitere social media Plattform. <br>
+Der Name lässt vielleicht erahnen, dass es sich um eine Art Mischform aus beispielsweise Instagram und der Corona-Warnapp handelt. <br>
+Wie auf Instagram kann man sich ein Profil erstellen, Bilder posten, anderen Leuten folgen und deren eigene Posts liken und kommentieren. <br>
+Zusätzlich kann man, wenn zum Beispiel ein gepostetes Bild bei einem gemeinsamen Treffen entstanden ist, die Mitwirkenden markieren. <br>
+Posts, in denen man markiert wird, landen ebenfalls auf dem eigenen Profil, allerdings in einer anderen Liste als die selbst geposteten Bilder. <br>
+Mithilfe der Markierungen wird auch das Warnfeature realisiert. <br>
+Falls man nämlich positiv auf Covid-19 getestet werden sollte, kann man einen Alarm auslösen, der markierte Personen über die Infektion informiert, <br>
+sodass sie sich so früh wie möglich in Quarantäne begeben können. <br>
 Dies funktioniert nur bei Mutuals, also Personen, denen man folgt, welche ebenfalls zurückfolgen, um Spam zu verhindern.<br><br>
 
 
@@ -75,10 +75,10 @@ Sie dient hauptsächlich der Übersichtlichkeit, da dies auch mittels ArrayListe
 **<summary>Package Post</summary>**
 
 _**Post**_ <br>
-Die Posts bringen Leben in eine social media Plattform. <br>
-Ein Post enthält den bzw. die Autor:in, die markierten Personen, eine Postbeschreibung sowie Zeitpunkt und Ort. <br>
-Das Bild an sich wird hier durch eine Bildbeschreibung realisiert, da keine Datenbankanbindung vorhanden ist und somit keine Bilder gespeichert werden. <br>
-Der gesamte Post wird erst vervollständigt, wenn er mittels zugehöriger Methode submitted wird. <br>
+Die Posts bringen Leben in eine social media Plattform.
+Ein Post enthält den bzw. die Autor:in, die markierten Personen, eine Postbeschreibung sowie Zeitpunkt und Ort.
+Das Bild an sich wird hier durch eine Bildbeschreibung realisiert, da keine Datenbankanbindung vorhanden ist und somit keine Bilder gespeichert werden.
+Der gesamte Post wird erst vervollständigt, wenn er mittels zugehöriger Methode submitted wird.
 Weiterhin können bei einem Post auch die Likes und die Liked By Liste, sowie die Kommentare eingesehen werden.
 <br><br>
 
